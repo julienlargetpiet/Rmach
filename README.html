@@ -1,0 +1,432 @@
+<!DOCTYPE html><html><head><title>R: best_model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>best_model</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>best_model</h2>
+
+<h3>Description</h3>
+
+<p>Returns the best input models. The coefficient of the best model can be found with the poly_model function
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>best_model(
+  inpt_datf,
+  Degree,
+  Coeff_v = NA,
+  Powers = NA,
+  Mth_symb,
+  Numrtr_v = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt_datf">inpt_datf</code></td>
+<td>
+<p>is the input dataframe, first column for the x values and second column for the y values</p>
+</td></tr>
+<tr><td><code id="Degree">Degree</code></td>
+<td>
+<p>is a vector containing all the degrees. Each degree represents how many coefficients the model has.</p>
+</td></tr>
+<tr><td><code id="Coeff_v">Coeff_v</code></td>
+<td>
+<p>is a list containing the vector containing the coefficients for each model. The first value of each coefficient vector is always the constant, so it is not linked to any math symbol</p>
+</td></tr>
+<tr><td><code id="Powers">Powers</code></td>
+<td>
+<p>is a list containing all the values associated with the math symbols of mth_symb list for each model. Because you can have multiple models in the function, so Powers is separated with the &quot;-&quot; separator between the different powers values for each model like in the examples</p>
+</td></tr>
+<tr><td><code id="Mth_symb">Mth_symb</code></td>
+<td>
+<p>is a list containing the vector of the different math symbols linked to the coefficients from the second value</p>
+</td></tr>
+<tr><td><code id="Numrtr_v">Numrtr_v</code></td>
+<td>
+<p>is a list containing the different numerator values for each math symbol for each model, see examples</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+print(best_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), Degree=c(2, 2), Coeff_v=c("-", 32.5, -3, "-", 32.5, -5, "-"), Powers=c("-", 1, "-", 1, "-"), Mth_symb=c("-", "x", "-", "x", "-"), Numrtr_v=NA))
+
+[1] 2
+
+print(best_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), Degree=c(2, 2), Coeff_v=c("-", c(32.5, -5), "-", c(32.5, -3), "-"), Powers=c("-", c(1), "-", c(1), "-"), Mth_symb=c("-", c("x"), "-", c("1/x"), "-"), Numrtr_v=NA))
+
+[1] 1
+
+print(best_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), Degree=c(2, 2), Coeff_v=c("-", c(32.5, -5), "-", c(32.5, -3), "-"), Powers=c("-", c(1), "-", list(c(1:length(mtcars$wt))), "-"), Mth_symb=c("-", c("x"), "-", c("1/x"), "-"), Numrtr_v=NA))
+
+[1] 1
+
+print(best_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), Degree=c(2, 2), Coeff_v=c("-", c(32.5, -5), "-", c(32.5, -3, 2), "-"), Powers=c("-", c(1), "-", list(c(1:length(mtcars$wt)), 2), "-"), Mth_symb=c("-", c("x"), "-", c("list/x", "x"), "-"), Numrtr_v=c("-", list(c(1:length(mtcars$wt))), "-")))
+
+#' [1] 1
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
+<!DOCTYPE html><html><head><title>R: calcall</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>calcall</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>calcall</h2>
+
+<h3>Description</h3>
+
+<p>Takes a formula as a character as an input and makes the calculation. Accepts also variables, in this case the part of the formula that contains the variable wont be calculated, but the others part will be as usual.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>calcall(inpt)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt">inpt</code></td>
+<td>
+<p>is the input formula as a character</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+print(calcall(inpt="ze+(yu*((fgf)-(-12+8-Y+4-T+4+97+a)+tt))"))
+
+[1] "ze+(yu*(fgf-(-4-Y+4-T+101+a)+tt))"
+
+print(calcall(inpt="ze+(yu*((fgf)-(-12+8-7+3-67+4+97+1)+tt))"))
+
+[1] "ze+(yu*(fgf-27+tt))"
+
+print(calcall(inpt="ze+(yu*((fgf)+(12*3/2+4)+tt))"))
+
+[1] "ze+(yu*(fgf+22+tt))"
+
+print(calcall(inpt="1+3*2+(-2/-3*-3*((fgf)-(--12-6)+2))+5-3*5"))
+
+[1] "7+(-2*(fgf-4))+20"
+
+print(calcall(inpt="1+3*2+(-2/-3*-3*((fgf)-(--12-6)+2))+(-log_e_1_e_2+t+2^3)+m-log_e_1_e_2+2^3-m-6*2+(e_ii-2-6+log_im_4-67)+-6+2+(y-5+7)"))
+
+[1] "7+(-2*(fgf-4))+(-2+t+8)+m+6-m-12+(e_ii-8+log_im_4-67)-4+(y+2)"
+
+print(calcall("(6+4*-(4-5))+3/3"))
+
+[1] "11" 
+
+print(calcall(inpt="1+3*2+(-2/-3*-3*((fgf)-(--12-6)+2))+(-log_e_1_e_2+t+2^3)+m-log_e_1_e_2+2^3-m-6*2+-6+2"))
+
+[1] "7+(-2*(fgf-4))+(-2+t+8)+m+6-m-16"
+
+print(calcall(inpt="(log_5_Z-2-6+5)+-6+2"))
+
+[1] "(log_5_Z-3)-4"
+
+print(calcall(inpt="m--2+-5"))
+
+[1] "m-3"
+
+print(calcall(inpt="(-2-6)+-6+2"))
+
+[1] "-12" 
+
+print(calcall(inpt="m-6"))
+
+[1] "m-6"
+
+print(calcall(inpt="--6"))
+
+[1] "6"
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
+<!DOCTYPE html><html><head><title>R: calcall_var</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>calcall_var</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>calcall_var</h2>
+
+<h3>Description</h3>
+
+<p>Does the same thing as calcall function but calculates the formula that have variables. The values of the variables have to be given in a list of vectors, see examples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>calcall_var(inpt, var_name_v, var_val_l)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt">inpt</code></td>
+<td>
+<p>is the input formula, with the variables</p>
+</td></tr>
+<tr><td><code id="var_name_v">var_name_v</code></td>
+<td>
+<p>is the vector that contains the variables name in the order of apparition in the formula. If the variable appears multiple times in the formula, it has to be specified in this vector, see examples.</p>
+</td></tr>
+<tr><td><code id="var_val_l">var_val_l</code></td>
+<td>
+<p>is the list containing the vectors containing the values of each variable, for each point you want to calculate. The vectors has to be given in the same order has the variable in var_name_v.</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+print(calcall_var(inpt="(6+m*-(4-imp))+3/jp", var_name_v=c("m", "imp", "jp"), 
+                  var_val_l=list(
+
+                                 c(1:6), 
+
+                                 c(3, 4, 2, 5, 6, 1),
+
+                                 c(6:1))))
+
+ [1] "5.5"  "6.6"  "0.75" "11"   "17.5" "-9"
+
+print(calcall_var(inpt="(6+m*-(4-imp))+3/jp+jp", var_name_v=c("m", "imp", "jp", "jp"), 
+                   var_val_l=list(
+ 
+                                  c(1:6), 
+ 
+                                  c(3, 4, 2, 5, 6, 1),
+ 
+                                  c(6:1))))
+
+[1] "11.5" "11.6" "4.75" "14" "19.5" "-8"
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
+<!DOCTYPE html><html><head><title>R: Rmach poly_model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>poly_model</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Rmach
+poly_model</h2>
+
+<h3>Description</h3>
+
+<p>Take a datasets of x and y values and a function tha could fit all the data with the missing coefficients, and returns a list containing the coefficients that fit the best the data for a given function, as a vector for the first index, and  at the second index, the actual sum of difference between each data point and the function at the same x values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>poly_model(
+  inpt_datf,
+  degree,
+  twk_val = NA,
+  sensi_val = twk_val,
+  coeff_v = NA,
+  powers = NA,
+  mth_symb = c("x"),
+  numrtr_v = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt_datf">inpt_datf</code></td>
+<td>
+<p>is the input data as a dataframe, first column is the x values and the second is the y values</p>
+</td></tr>
+<tr><td><code id="degree">degree</code></td>
+<td>
+<p>is how many coefficients will be involved (each coefficient multiplies either an x to the power of something, an exponential of something or a base something logarithm for a something value)</p>
+</td></tr>
+<tr><td><code id="twk_val">twk_val</code></td>
+<td>
+<p>is the value used for finding the best coefficients, it is directly linked to the accuracy of the coefficients, see the description for more information. Defaults to (max(yval) - min(yval)) / n</p>
+</td></tr>
+<tr><td><code id="sensi_val">sensi_val</code></td>
+<td>
+<p>is the value from which two variations of a coefficient brings a so small accuracy contribution that the algorythm does not continue to find better coefficients. For example, if i set sensi_val = 0.001, so if coefficients alpha1 and beta1 brings a total difference between the function and the actual data of 10.8073 and then the algorythm find alpha2 and beta1 that brings a total difference equal to 10.8066, so the algorythm will stop running. But the coefficients returned will still be the best, that is alpha2 and beta1</p>
+</td></tr>
+<tr><td><code id="coeff_v">coeff_v</code></td>
+<td>
+<p>is a vector containing the original coefficients for the function, so the closest those are from the best one, the fastest the algorythm will compute the best coefficients. The first value of coeff is always the constant.</p>
+</td></tr>
+<tr><td><code id="powers">powers</code></td>
+<td>
+<p>is a vector containing the exponent, or related value to mth_symb. powers can be a vector if those values are constants or it could be a list of vectors the length of observed individuals, if those values varies like in the examples. Notthat if you use variables in powers (list), each values of a vector from this list has to be at the exact same x coordinates of each observed individuals in the input dataframe. Ex: datf &lt;- data.frame(&quot;x&quot;=c(4, 4, 3, 2, 1, 1), &quot;y&quot;=c(1:6)), so vector(s) from powers that contain varying value must be of length 4. Also, the values are not ascendly sorted, don't worry values are ascendly sorted under the hood, so fill your powers vectors in the intuitive ascendly way</p>
+</td></tr>
+<tr><td><code id="mth_symb">mth_symb</code></td>
+<td>
+<p>is a vector containing the elemnts linked to the coefficients from the second element. It can be x, e (exp(x)) or log-X (log(x)-base), and their reverse like 1/x. If the numerator varies the element should be entered like tis list/x, list/e or list/log-base. See numrtr_v for the values related to list</p>
+</td></tr>
+<tr><td><code id="numrtr_v">numrtr_v</code></td>
+<td>
+<p>is a vector containing the values for the numerator related to mth_symb if on element is like this: list/x or list/e</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=2, coeff_v=c(32.5, -5), powers=c(1), mth_symb=c("x"),
+
+                 numrtr_v=NA))
+
+[[1]]
+[1] 33.234375 -4.265625
+
+[[2]]
+[1] 74.78275
+
+print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=2, coeff_v=c(32.5, -3), powers=c(1), mth_symb=c("x"),
+
+                 numrtr_v=NA))
+
+[[1]]
+[1] 31.765625 -3.734375
+
+[[2]]
+[1] 80.36228
+
+print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=2, coeff_v=c(32.5, -3), powers=list(c(1:length(mtcars$wt))), mth_symb=c("x"),
+
+                 numrtr_v=NA))
+
+[[1]]
+[1] 32.5 -3.0
+
+[[2]]
+[1] 1.067436e+24
+
+print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=2, coeff_v=c(32.5, -3), powers=list(c(1:length(mtcars$wt))), mth_symb=c("list/x"),
+
+                 numrtr_v=list(c(length(mtcars$wt):1))))
+[[1]]
+[1] 19.28125 -0.06250
+
+[[2]]
+[1] 35839.44
+
+print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=2, coeff_v=c(32.5, -3), powers=list(c(1:length(mtcars$wt))), mth_symb=c("1/x"),
+
+                 numrtr_v=NA))
+
+[[1]]
+[1] 27.359375 -8.140625
+
+[[2]]
+[1] 160.2263
+
+print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=1, coeff_v=c(32.5), powers=NA, mth_symb=NA,
+
+                 numrtr_v=NA))
+
+[[1]]
+[1] 19.28125
+
+[[2]]
+[1] 148.7625
+
+print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=2, coeff_v=c(32.5, -3, 2), powers=list(c(1:length(mtcars$wt)), 2), mth_symb=c("1/x", "x"),
+ 
+                  numrtr_v=NA))
+
+[[1]]
+[1]  0.921875 -5.203125  2.000000
+
+[[2]]
+[1] 455.6017
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
