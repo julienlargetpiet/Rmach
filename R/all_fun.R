@@ -5671,6 +5671,77 @@ calcall_var <- function(inpt, var_name_v, var_val_l){
 
 }
 
+#' common_tracks
+#'
+#' From a time serie, allow to get the most common route for each individual at a given depth (time - 1). Access the frequency value as an element from the output vector and the value itself (the path) as a name of its element, see examples.
+#'
+#' @param inpt_datf is the input time serie as a dataframe
+#' @param col_target is the column name or number that refers to the value of each individual
+#' @param id_col is the column name or number that refers to the individual (ids)
+#' @param untl_last is the depth value
+#' @examples
+#'
+#' datf_test <- data.frame("id" = c(1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 5, 5),
+#'                          "city" = c("A", "C", "B", "B", "A", "C", "A", "C", "A", "C", "B", "A", "A", "E"))
+#' 
+#' print(individual_route(inpt_datf = datf_test, 
+#'                        col_target = "city", 
+#'                        id_col = "id",
+#'                        untl_last = 2))
+#' 
+#' AC CA BA 
+#'  2  1  2 
+#' 
+#' print(individual_route(inpt_datf = datf_test, 
+#'                        col_target = "city", 
+#'                        id_col = "id",
+#'                        untl_last = 3))
+#'
+#' ACB  AC CAC  BA BAA 
+#'   1   2   1   2   1 
+#'
+#' @export
 
-
-
+individual_route <- function(inpt_datf, col_target, id_col, untl_last = 2){
+  if (typeof(col_target) == "character"){
+    col_target <- match(x = col_target, table = colnames(inpt_datf))
+  }
+  if (typeof(id_col) == "character"){
+    id_col <- match(x = id_col, table = colnames(inpt_datf))
+  }
+  inpt_datf <- inpt_datf[, c(col_target, id_col)]
+  mods_v <- unique(inpt_datf[, 1])
+  rtn_v <- c()
+  for (mod in mods_v){
+    cur_ids <- c()
+    for (i in unique(inpt_datf[, 2])){
+      cur_vec <- inpt_datf[grep(pattern = i, x = inpt_datf[, 2]), 1]
+      pre_mtch <- match(x = mod, table = cur_vec)
+      if (!(is.na(pre_mtch))){
+        if (pre_mtch == 1){
+          cur_ids <- c(cur_ids, grep(pattern = i, x = inpt_datf[, 2]))
+        }
+      }
+    }
+    if (length(cur_ids) > 0){
+      cur_datf <- inpt_datf[cur_ids,]
+      un_individual <- unique(cur_datf[, 2])
+      concat_v <- c(matrix(data = "", nrow = length(un_individual), ncol = 1))
+      for (i in 1:length(un_individual)){
+        cur_vec <- cur_datf[grep(pattern = un_individual[i], x = cur_datf[, 2]), 1]
+        cnt = 1
+        while (cnt <= untl_last & cnt <= length(cur_vec)){
+          concat_v[i] <- paste0(concat_v[i], cur_vec[cnt])
+          cnt = cnt + 1
+        }
+      }
+      pre_lngth <- length(rtn_v) + 1
+      for (i in unique(concat_v)){
+        rtn_v <- c(rtn_v, sum(grepl(pattern = i, x = concat_v)))
+      }
+      names(rtn_v)[pre_lngth:(pre_lngth - 1 + length(unique(concat_v)))] <- unique(concat_v) 
+      inpt_datf <- inpt_datf[-cur_ids,]
+    }
+  }
+  return(rtn_v)
+}

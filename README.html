@@ -1,3 +1,4 @@
+
 <!DOCTYPE html><html><head><title>R: best_model</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -265,6 +266,88 @@ print(calcall_var(inpt="(6+m*-(4-imp))+3/jp+jp", var_name_v=c("m", "imp", "jp", 
                                   c(6:1))))
 
 [1] "11.5" "11.6" "4.75" "14" "19.5" "-8"
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
+<!DOCTYPE html><html><head><title>R: common_tracks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>individual_route</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>common_tracks</h2>
+
+<h3>Description</h3>
+
+<p>From a time serie, allow to get the most common route for each individual at a given depth (time - 1). Access the frequency value as an element from the output vector and the value itself (the path) as a name of its element, see examples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>individual_route(inpt_datf, col_target, id_col, untl_last = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt_datf">inpt_datf</code></td>
+<td>
+<p>is the input time serie as a dataframe</p>
+</td></tr>
+<tr><td><code id="col_target">col_target</code></td>
+<td>
+<p>is the column name or number that refers to the value of each individual</p>
+</td></tr>
+<tr><td><code id="id_col">id_col</code></td>
+<td>
+<p>is the column name or number that refers to the individual (ids)</p>
+</td></tr>
+<tr><td><code id="untl_last">untl_last</code></td>
+<td>
+<p>is the depth value</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+datf_test &lt;- data.frame("id" = c(1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 5, 5),
+                         "city" = c("A", "C", "B", "B", "A", "C", "A", "C", "A", "C", "B", "A", "A", "E"))
+
+print(individual_route(inpt_datf = datf_test, 
+                       col_target = "city", 
+                       id_col = "id",
+                       untl_last = 2))
+
+AC CA BA 
+ 2  1  2 
+
+print(individual_route(inpt_datf = datf_test, 
+                       col_target = "city", 
+                       id_col = "id",
+                       untl_last = 3))
+
+ACB  AC CAC  BA BAA 
+  1   2   1   2   1 
 
 </code></pre>
 

@@ -201,6 +201,57 @@ print(calcall(inpt="--6"))
 ```
 
 
+# `individual_route`
+
+common_tracks
+
+
+## Description
+
+From a time serie, allow to get the most common route for each individual at a given depth (time - 1). Access the frequency value as an element from the output vector and the value itself (the path) as a name of its element, see examples.
+
+
+## Usage
+
+```r
+individual_route(inpt_datf, col_target, id_col, untl_last = 2)
+```
+
+
+## Arguments
+
+Argument      |Description
+------------- |----------------
+`inpt_datf`     |     is the input time serie as a dataframe
+`col_target`     |     is the column name or number that refers to the value of each individual
+`id_col`     |     is the column name or number that refers to the individual (ids)
+`untl_last`     |     is the depth value
+
+
+## Examples
+
+```r
+datf_test <- data.frame("id" = c(1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 5, 5),
+"city" = c("A", "C", "B", "B", "A", "C", "A", "C", "A", "C", "B", "A", "A", "E"))
+
+print(individual_route(inpt_datf = datf_test,
+col_target = "city",
+id_col = "id",
+untl_last = 2))
+
+AC CA BA
+2  1  2
+
+print(individual_route(inpt_datf = datf_test,
+col_target = "city",
+id_col = "id",
+untl_last = 3))
+
+ACB  AC CAC  BA BAA
+1   2   1   2   1
+```
+
+
 # `poly_model`
 
 Rmach

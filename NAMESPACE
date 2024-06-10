@@ -3,5 +3,6 @@
 export(best_model)
 export(calcall)
 export(calcall_var)
+export(individual_route)
 export(poly_model)
 import(stringr)
