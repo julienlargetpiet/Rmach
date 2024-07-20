@@ -19,7 +19,7 @@ train and test, see examples and variables
 }
 \examples{
 
-print(v_Rmach_fold(inpt_datf = iris,
+print(v_Rmach_fold(inpt_datf = iris[1:25,],
              train_prop = 0.7,
              n_fold = 4))
 
