@@ -367,9 +367,9 @@ numrtr_v=NA))
 ```
 
 
-# `v_edm_fold`
+# `v_Rmach_fold`
 
-v_edm_fold
+v_Rmach_fold
 
 
 ## Description
@@ -381,7 +381,7 @@ Allow to create uniform sampling dataset for cross validation,
 ## Usage
 
 ```r
-v_edm_fold(inpt_datf, train_prop, n_fold)
+v_Rmach_fold(inpt_datf, train_prop, n_fold)
 ```
 
 
@@ -397,7 +397,7 @@ Argument      |Description
 ## Examples
 
 ```r
-print(v_edm_fold(inpt_datf = iris,
+print(v_Rmach_fold(inpt_datf = iris,
 train_prop = 0.7,
 n_fold = 4))
 

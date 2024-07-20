@@ -5746,9 +5746,7 @@ individual_route <- function(inpt_datf, col_target, id_col, untl_last = 2){
   return(rtn_v)
 }
 
-library("stringr")
-
-#' v_edm_fold
+#' v_Rmach_fold
 #'
 #' Allow to create uniform sampling dataset for cross validation, 
 #' train and test, see examples and variables
@@ -5759,7 +5757,7 @@ library("stringr")
 #'
 #' @examples
 #'
-#' print(v_edm_fold(inpt_datf = iris,
+#' print(v_Rmach_fold(inpt_datf = iris,
 #'              train_prop = 0.7,
 #'              n_fold = 4))
 #' 
@@ -5896,7 +5894,7 @@ library("stringr")
 #'
 #' @export
 
-v_edm_fold <- function(inpt_datf, train_prop, n_fold){
+v_Rmach_fold <- function(inpt_datf, train_prop, n_fold){
   nb_train <- train_prop * nrow(inpt_datf)
   if (str_detect(pattern = "\\.", 
         string = nb_train)){
