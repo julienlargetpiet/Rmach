@@ -5745,3 +5745,182 @@ individual_route <- function(inpt_datf, col_target, id_col, untl_last = 2){
   }
   return(rtn_v)
 }
+
+library("stringr")
+
+#' v_edm_fold
+#'
+#' Allow to create uniform sampling dataset for cross validation, 
+#' train and test, see examples and variables
+#'
+#' @param inpt_datf is the input dataframe
+#' @param train_prop is the training proportion 
+#' @param n_fold is the number of distinc pair of training and test dataset that will be outputed
+#'
+#' @examples
+#'
+#' print(v_edm_fold(inpt_datf = iris,
+#'              train_prop = 0.7,
+#'              n_fold = 4))
+#' 
+#' [[1]]
+#' [[1]]$train
+#'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 11            5.4         3.7          1.5         0.2  setosa           0
+#' 17            5.4         3.9          1.3         0.4  setosa           0
+#' 22            5.1         3.7          1.5         0.4  setosa           0
+#' 19            5.7         3.8          1.7         0.3  setosa           0
+#' 7             4.6         3.4          1.4         0.3  setosa           0
+#' 6             5.4         3.9          1.7         0.4  setosa           0
+#' 14            4.3         3.0          1.1         0.1  setosa           0
+#' 7.1           4.6         3.4          1.4         0.3  setosa           0
+#' 13            4.8         3.0          1.4         0.1  setosa           0
+#' 17.1          5.4         3.9          1.3         0.4  setosa           0
+#' 14.1          4.3         3.0          1.1         0.1  setosa           0
+#' 23            4.6         3.6          1.0         0.2  setosa           0
+#' 15            5.8         4.0          1.2         0.2  setosa           0
+#' 1             5.1         3.5          1.4         0.2  setosa           0
+#' 10            4.9         3.1          1.5         0.1  setosa           0
+#' 14.2          4.3         3.0          1.1         0.1  setosa           0
+#' 14.3          4.3         3.0          1.1         0.1  setosa           0
+#' 3             4.7         3.2          1.3         0.2  setosa           0
+#' 
+#' [[1]]$test
+#'    Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 6           5.4         3.9          1.7         0.4  setosa           1
+#' 10          4.9         3.1          1.5         0.1  setosa           1
+#' 22          5.1         3.7          1.5         0.4  setosa           1
+#' 9           4.4         2.9          1.4         0.2  setosa           1
+#' 21          5.4         3.4          1.7         0.2  setosa           1
+#' 4           4.6         3.1          1.5         0.2  setosa           1
+#' 3           4.7         3.2          1.3         0.2  setosa           1
+#' 
+#' 
+#' [[2]]
+#' [[2]]$train
+#'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 21            5.4         3.4          1.7         0.2  setosa           0
+#' 23            4.6         3.6          1.0         0.2  setosa           0
+#' 12            4.8         3.4          1.6         0.2  setosa           0
+#' 22            5.1         3.7          1.5         0.4  setosa           0
+#' 3             4.7         3.2          1.3         0.2  setosa           0
+#' 12.1          4.8         3.4          1.6         0.2  setosa           0
+#' 15            5.8         4.0          1.2         0.2  setosa           0
+#' 24            5.1         3.3          1.7         0.5  setosa           0
+#' 12.2          4.8         3.4          1.6         0.2  setosa           0
+#' 11            5.4         3.7          1.5         0.2  setosa           0
+#' 15.1          5.8         4.0          1.2         0.2  setosa           0
+#' 15.2          5.8         4.0          1.2         0.2  setosa           0
+#' 6             5.4         3.9          1.7         0.4  setosa           0
+#' 5             5.0         3.6          1.4         0.2  setosa           0
+#' 7             4.6         3.4          1.4         0.3  setosa           0
+#' 7.1           4.6         3.4          1.4         0.3  setosa           0
+#' 4             4.6         3.1          1.5         0.2  setosa           0
+#' 14            4.3         3.0          1.1         0.1  setosa           0
+#' 
+#' [[2]]$test
+#'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 17            5.4         3.9          1.3         0.4  setosa           1
+#' 15            5.8         4.0          1.2         0.2  setosa           1
+#' 5             5.0         3.6          1.4         0.2  setosa           1
+#' 5.1           5.0         3.6          1.4         0.2  setosa           1
+#' 3             4.7         3.2          1.3         0.2  setosa           1
+#' 23            4.6         3.6          1.0         0.2  setosa           1
+#' 15.1          5.8         4.0          1.2         0.2  setosa           1
+#' 
+#' 
+#' [[3]]
+#' [[3]]$train
+#'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 24            5.1         3.3          1.7         0.5  setosa           0
+#' 9             4.4         2.9          1.4         0.2  setosa           0
+#' 24.1          5.1         3.3          1.7         0.5  setosa           0
+#' 20            5.1         3.8          1.5         0.3  setosa           0
+#' 9.1           4.4         2.9          1.4         0.2  setosa           0
+#' 18            5.1         3.5          1.4         0.3  setosa           0
+#' 10            4.9         3.1          1.5         0.1  setosa           0
+#' 18.1          5.1         3.5          1.4         0.3  setosa           0
+#' 12            4.8         3.4          1.6         0.2  setosa           0
+#' 5             5.0         3.6          1.4         0.2  setosa           0
+#' 19            5.7         3.8          1.7         0.3  setosa           0
+#' 2             4.9         3.0          1.4         0.2  setosa           0
+#' 7             4.6         3.4          1.4         0.3  setosa           0
+#' 23            4.6         3.6          1.0         0.2  setosa           0
+#' 8             5.0         3.4          1.5         0.2  setosa           0
+#' 17            5.4         3.9          1.3         0.4  setosa           0
+#' 16            5.7         4.4          1.5         0.4  setosa           0
+#' 2.1           4.9         3.0          1.4         0.2  setosa           0
+#' 
+#' [[3]]$test
+#'     Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 24           5.1         3.3          1.7         0.5  setosa           1
+#' 14           4.3         3.0          1.1         0.1  setosa           1
+#' 8            5.0         3.4          1.5         0.2  setosa           1
+#' 9            4.4         2.9          1.4         0.2  setosa           1
+#' 5            5.0         3.6          1.4         0.2  setosa           1
+#' 6            5.4         3.9          1.7         0.4  setosa           1
+#' 9.1          4.4         2.9          1.4         0.2  setosa           1
+#' 
+#' 
+#' [[4]]
+#' [[4]]$train
+#'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 22            5.1         3.7          1.5         0.4  setosa           0
+#' 4             4.6         3.1          1.5         0.2  setosa           0
+#' 1             5.1         3.5          1.4         0.2  setosa           0
+#' 9             4.4         2.9          1.4         0.2  setosa           0
+#' 4.1           4.6         3.1          1.5         0.2  setosa           0
+#' 21            5.4         3.4          1.7         0.2  setosa           0
+#' 14            4.3         3.0          1.1         0.1  setosa           0
+#' 9.1           4.4         2.9          1.4         0.2  setosa           0
+#' 3             4.7         3.2          1.3         0.2  setosa           0
+#' 21.1          5.4         3.4          1.7         0.2  setosa           0
+#' 20            5.1         3.8          1.5         0.3  setosa           0
+#' 20.1          5.1         3.8          1.5         0.3  setosa           0
+#' 23            4.6         3.6          1.0         0.2  setosa           0
+#' 8             5.0         3.4          1.5         0.2  setosa           0
+#' 9.2           4.4         2.9          1.4         0.2  setosa           0
+#' 8.1           5.0         3.4          1.5         0.2  setosa           0
+#' 15            5.8         4.0          1.2         0.2  setosa           0
+#' 24            5.1         3.3          1.7         0.5  setosa           0
+#' 
+#' [[4]]$test
+#'    Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+#' 24          5.1         3.3          1.7         0.5  setosa           1
+#' 23          4.6         3.6          1.0         0.2  setosa           1
+#' 15          5.8         4.0          1.2         0.2  setosa           1
+#' 4           4.6         3.1          1.5         0.2  setosa           1
+#' 17          5.4         3.9          1.3         0.4  setosa           1
+#' 3           4.7         3.2          1.3         0.2  setosa           1
+#' 6           5.4         3.9          1.7         0.4  setosa           1
+#'
+#' @export
+
+v_edm_fold <- function(inpt_datf, train_prop, n_fold){
+  nb_train <- train_prop * nrow(inpt_datf)
+  if (str_detect(pattern = "\\.", 
+        string = nb_train)){
+    nb_train <- round(x = nb_train, digits = 0)
+  }
+  if (nb_train == 1){
+    return("Training number too high")
+  }else if (nb_train == 0){
+    return("Training number too low")
+  }
+  rtn_l <- list()
+  for (I in 1:n_fold) {
+    cur_datf <- cbind(inpt_datf[runif(n = nb_train, 
+                min = 1, max = nrow(inpt_datf)),], 
+                "test_status" = rep(x = 0, times = nb_train))
+    cur_datf2 <- cbind(
+                        inpt_datf[runif(n = (nrow(inpt_datf) - nb_train), 
+                        min = 1, max = nrow(inpt_datf)),], 
+                        "test_status" = rep(x = 1, times = (nrow(inpt_datf) - nb_train))
+                  ) 
+    rtn_l <- append(x = rtn_l, values = list(list("train" = cur_datf, "test" = cur_datf2)))
+  }
+  return(rtn_l)
+}
+
+
+
