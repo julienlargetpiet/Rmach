@@ -5920,5 +5920,88 @@ v_Rmach_fold <- function(inpt_datf, train_prop, n_fold){
   return(rtn_l)
 }
 
+#' knn_Rmach
+#'
+#' KNN algorythm, see example
+#'
+#' @param train is a dataframe with the known individual and their variadbles and classification columns
+#' @param test is a dataframe with the new individuals with ich e do not know the class, only the variables 
+#' @param k is the number of neighbours
+#' @param col_vars_train is a vector containing the column names or column numbers of the variables in train, if empty all column are considered as a variable apart from the last one that is considered as the classification column
+#' @param col_vars_test is a vector containing the column names or column numbers of the variables in test, if empty all column are considered as a variable
+#' @param class_col is the column name or column number of the classification column in train 
+#'
+#' @examples
+#'
+#' cur_ids <- runif(n = 45, min = 1, max = 150)
+#' 
+#' vec <- knn_Rmach(train = iris[-cur_ids,], 
+#'           test = iris[cur_ids, 1:4],
+#'            col_vars_train = c(1:4),
+#'           col_vars_test = c(1:4),
+#'           class_col = 5,
+#'           k = 3
+#'        )
+#' 
+#' sum(vec == iris[cur_ids, 5]) / 45
+#' 
+#' [1] 0.9555556
+#'
+#' @export
+
+knn_Rmach <- function(train, test, k, col_vars_train = c(), 
+                      col_vars_test = c(), class_col){
+  see_mode <- function(inpt_v = c()){
+    unique_total <- function(inpt_v = c()){
+      rtn_v <- c()
+      for (el in unique(inpt_v)){
+        rtn_v <- c(rtn_v, length(grep(pattern = paste0("^", el, "$"), x = inpt_v)))
+      }
+      return(rtn_v)
+    }
+    return(unique(inpt_v)[which.max(unique_total(inpt_v))])
+  }
+  if (typeof(col_vars_train) == "character"){
+    for (i in 1:length(col_vars_train)){
+      col_vars_train[i] <- match(x = col_vars_train[i], 
+                                 table = colnames(train))
+    }
+    col_vars_train <- as.numeric(col_vars_train)
+  }else if (length(col_vars_train) == 0){
+    col_vars_train <- c(1:(ncol(train) - 1))
+  }
+  if (typeof(col_vars_test) == "character"){
+    for (i in 1:length(col_vars_test)){
+      col_vars_test[i] <- match(x = col_vars_test[i], 
+                                 table = colnames(test))
+    }
+    col_vars_test <- as.numeric(col_vars_test)
+  }else if (length(col_vars_test) == 0){
+    col_vars_train <- c(1:ncol(test))
+  }
+  if (typeof(class_col) == "character"){ 
+    class_col <- match(x = class_col, table = colnames(train))
+  }
+  rtn_v <- c()
+  for (I in 1:nrow(test)){
+    cur_vec <- abs(train[, 1] - test[I, 1])
+    if (length(col_vars_train) > 1){
+      for (i in 1:length(col_vars_train)){
+        cur_vec <- cur_vec + abs(train[, i] - test[I, i])
+      }
+    }
+    cur_votes <- c()
+    cur_max <- max(cur_vec) + 1
+    for (i in 1:k){
+      cur_id <- which.min(cur_vec)
+      cur_votes <- c(cur_votes, as.character(train[cur_id, class_col]))
+      cur_vec[cur_id] <- cur_max
+    }
+    rtn_v <- c(rtn_v, see_mode(inpt_v = cur_votes)) 
+  }
+  return(rtn_v)
+}
+
+
 
 

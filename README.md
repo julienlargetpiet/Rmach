@@ -252,6 +252,54 @@ ACB  AC CAC  BA BAA
 ```
 
 
+# `knn_Rmach`
+
+knn_Rmach
+
+
+## Description
+
+KNN algorythm, see example
+
+
+## Usage
+
+```r
+knn_Rmach(train, test, k, col_vars_train = c(), col_vars_test = c(), class_col)
+```
+
+
+## Arguments
+
+Argument      |Description
+------------- |----------------
+`train`     |     is a dataframe with the known individual and their variadbles and classification columns
+`test`     |     is a dataframe with the new individuals with ich e do not know the class, only the variables
+`k`     |     is the number of neighbours
+`col_vars_train`     |     is a vector containing the column names or column numbers of the variables in train, if empty all column are considered as a variable apart from the last one that is considered as the classification column
+`col_vars_test`     |     is a vector containing the column names or column numbers of the variables in test, if empty all column are considered as a variable
+`class_col`     |     is the column name or column number of the classification column in train
+
+
+## Examples
+
+```r
+cur_ids <- runif(n = 45, min = 1, max = 150)
+
+vec <- knn_Rmach(train = iris[-cur_ids,],
+test = iris[cur_ids, 1:4],
+col_vars_train = c(1:4),
+col_vars_test = c(1:4),
+class_col = 5,
+k = 3
+)
+
+sum(vec == iris[cur_ids, 5]) / 45
+
+[1] 0.9555556
+```
+
+
 # `poly_model`
 
 Rmach

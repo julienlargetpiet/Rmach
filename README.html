@@ -355,6 +355,91 @@ ACB  AC CAC  BA BAA
 
 </div>
 </body></html>
+<!DOCTYPE html><html><head><title>R: knn_Rmach</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>knn_Rmach</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>knn_Rmach</h2>
+
+<h3>Description</h3>
+
+<p>KNN algorythm, see example
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>knn_Rmach(train, test, k, col_vars_train = c(), col_vars_test = c(), class_col)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="train">train</code></td>
+<td>
+<p>is a dataframe with the known individual and their variadbles and classification columns</p>
+</td></tr>
+<tr><td><code id="test">test</code></td>
+<td>
+<p>is a dataframe with the new individuals with ich e do not know the class, only the variables</p>
+</td></tr>
+<tr><td><code id="k">k</code></td>
+<td>
+<p>is the number of neighbours</p>
+</td></tr>
+<tr><td><code id="col_vars_train">col_vars_train</code></td>
+<td>
+<p>is a vector containing the column names or column numbers of the variables in train, if empty all column are considered as a variable apart from the last one that is considered as the classification column</p>
+</td></tr>
+<tr><td><code id="col_vars_test">col_vars_test</code></td>
+<td>
+<p>is a vector containing the column names or column numbers of the variables in test, if empty all column are considered as a variable</p>
+</td></tr>
+<tr><td><code id="class_col">class_col</code></td>
+<td>
+<p>is the column name or column number of the classification column in train</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+cur_ids &lt;- runif(n = 45, min = 1, max = 150)
+
+vec &lt;- knn_Rmach(train = iris[-cur_ids,], 
+          test = iris[cur_ids, 1:4],
+           col_vars_train = c(1:4),
+          col_vars_test = c(1:4),
+          class_col = 5,
+          k = 3
+       )
+
+sum(vec == iris[cur_ids, 5]) / 45
+
+[1] 0.9555556
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
 <!DOCTYPE html><html><head><title>R: Rmach poly_model</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
