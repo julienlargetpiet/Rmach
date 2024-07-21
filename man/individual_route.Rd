@@ -2,7 +2,7 @@
 % Please edit documentation in R/all_fun.R
 \name{individual_route}
 \alias{individual_route}
-\title{common_tracks}
+\title{individual_route}
 \usage{
 individual_route(inpt_datf, col_target, id_col, untl_last = 2)
 }

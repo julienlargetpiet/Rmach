@@ -5671,7 +5671,7 @@ calcall_var <- function(inpt, var_name_v, var_val_l){
 
 }
 
-#' common_tracks
+#' individual_route
 #'
 #' From a time serie, allow to get the most common route for each individual at a given depth (time - 1). Access the frequency value as an element from the output vector and the value itself (the path) as a name of its element, see examples.
 #'
