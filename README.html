@@ -420,7 +420,7 @@ function processMathHTML() {
 <h3>Examples</h3>
 
 <pre><code class='language-R'>
-cur_ids &lt;- runif(n = 45, min = 1, max = 150)
+cur_ids &lt;- round(runif(n = 45, min = 1, max = 150))
 
 vec &lt;- knn_Rmach(train = iris[-cur_ids,], 
           test = iris[cur_ids, 1:4],

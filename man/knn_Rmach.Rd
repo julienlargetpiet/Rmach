@@ -24,7 +24,7 @@ KNN algorythm, see example
 }
 \examples{
 
-cur_ids <- runif(n = 45, min = 1, max = 150)
+cur_ids <- round(runif(n = 45, min = 1, max = 150))
 
 vec <- knn_Rmach(train = iris[-cur_ids,], 
           test = iris[cur_ids, 1:4],
