@@ -415,6 +415,26 @@ numrtr_v=NA))
 ```
 
 
+# `sample_Rmach-class`
+
+v_Rmach_fold
+
+
+## Description
+
+Allow to create uniform sampling dataset for cross validation,
+ train and test, see examples and variables
+
+
+## Arguments
+
+Argument      |Description
+------------- |----------------
+`inpt_datf`     |     is the input dataframe
+`train_prop`     |     is the training proportion
+`n_fold`     |     is the number of distinc pair of training and test dataset that will be outputed
+
+
 # `v_Rmach_fold`
 
 v_Rmach_fold
@@ -445,140 +465,191 @@ Argument      |Description
 ## Examples
 
 ```r
-print(v_Rmach_fold(inpt_datf = iris[1:25,],
+lst_test <- v_Rmach_fold(inpt_datf = iris[1:25,],
 train_prop = 0.7,
-n_fold = 4))
+n_fold = 4)
+print(lst_test)
 
-[[1]]
-[[1]]$train
+$col1
+An object of class "sample_Rmach"
+Slot "train":
 Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-11            5.4         3.7          1.5         0.2  setosa           0
-17            5.4         3.9          1.3         0.4  setosa           0
-22            5.1         3.7          1.5         0.4  setosa           0
-19            5.7         3.8          1.7         0.3  setosa           0
-7             4.6         3.4          1.4         0.3  setosa           0
-6             5.4         3.9          1.7         0.4  setosa           0
-14            4.3         3.0          1.1         0.1  setosa           0
-7.1           4.6         3.4          1.4         0.3  setosa           0
-13            4.8         3.0          1.4         0.1  setosa           0
-17.1          5.4         3.9          1.3         0.4  setosa           0
-14.1          4.3         3.0          1.1         0.1  setosa           0
-23            4.6         3.6          1.0         0.2  setosa           0
-15            5.8         4.0          1.2         0.2  setosa           0
-1             5.1         3.5          1.4         0.2  setosa           0
-10            4.9         3.1          1.5         0.1  setosa           0
-14.2          4.3         3.0          1.1         0.1  setosa           0
-14.3          4.3         3.0          1.1         0.1  setosa           0
-3             4.7         3.2          1.3         0.2  setosa           0
-
-[[1]]$test
-Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-6           5.4         3.9          1.7         0.4  setosa           1
-10          4.9         3.1          1.5         0.1  setosa           1
-22          5.1         3.7          1.5         0.4  setosa           1
-9           4.4         2.9          1.4         0.2  setosa           1
-21          5.4         3.4          1.7         0.2  setosa           1
-4           4.6         3.1          1.5         0.2  setosa           1
-3           4.7         3.2          1.3         0.2  setosa           1
-
-
-[[2]]
-[[2]]$train
-Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-21            5.4         3.4          1.7         0.2  setosa           0
-23            4.6         3.6          1.0         0.2  setosa           0
-12            4.8         3.4          1.6         0.2  setosa           0
-22            5.1         3.7          1.5         0.4  setosa           0
-3             4.7         3.2          1.3         0.2  setosa           0
-12.1          4.8         3.4          1.6         0.2  setosa           0
-15            5.8         4.0          1.2         0.2  setosa           0
-24            5.1         3.3          1.7         0.5  setosa           0
-12.2          4.8         3.4          1.6         0.2  setosa           0
-11            5.4         3.7          1.5         0.2  setosa           0
-15.1          5.8         4.0          1.2         0.2  setosa           0
-15.2          5.8         4.0          1.2         0.2  setosa           0
-6             5.4         3.9          1.7         0.4  setosa           0
-5             5.0         3.6          1.4         0.2  setosa           0
-7             4.6         3.4          1.4         0.3  setosa           0
-7.1           4.6         3.4          1.4         0.3  setosa           0
 4             4.6         3.1          1.5         0.2  setosa           0
-14            4.3         3.0          1.1         0.1  setosa           0
-
-[[2]]$test
-Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-17            5.4         3.9          1.3         0.4  setosa           1
-15            5.8         4.0          1.2         0.2  setosa           1
-5             5.0         3.6          1.4         0.2  setosa           1
-5.1           5.0         3.6          1.4         0.2  setosa           1
-3             4.7         3.2          1.3         0.2  setosa           1
-23            4.6         3.6          1.0         0.2  setosa           1
-15.1          5.8         4.0          1.2         0.2  setosa           1
-
-
-[[3]]
-[[3]]$train
-Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-24            5.1         3.3          1.7         0.5  setosa           0
-9             4.4         2.9          1.4         0.2  setosa           0
-24.1          5.1         3.3          1.7         0.5  setosa           0
+7             4.6         3.4          1.4         0.3  setosa           0
+19            5.7         3.8          1.7         0.3  setosa           0
+10            4.9         3.1          1.5         0.1  setosa           0
+23            4.6         3.6          1.0         0.2  setosa           0
 20            5.1         3.8          1.5         0.3  setosa           0
-9.1           4.4         2.9          1.4         0.2  setosa           0
-18            5.1         3.5          1.4         0.3  setosa           0
-10            4.9         3.1          1.5         0.1  setosa           0
-18.1          5.1         3.5          1.4         0.3  setosa           0
-12            4.8         3.4          1.6         0.2  setosa           0
-5             5.0         3.6          1.4         0.2  setosa           0
-19            5.7         3.8          1.7         0.3  setosa           0
-2             4.9         3.0          1.4         0.2  setosa           0
-7             4.6         3.4          1.4         0.3  setosa           0
-23            4.6         3.6          1.0         0.2  setosa           0
-8             5.0         3.4          1.5         0.2  setosa           0
-17            5.4         3.9          1.3         0.4  setosa           0
-16            5.7         4.4          1.5         0.4  setosa           0
-2.1           4.9         3.0          1.4         0.2  setosa           0
-
-[[3]]$test
-Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-24           5.1         3.3          1.7         0.5  setosa           1
-14           4.3         3.0          1.1         0.1  setosa           1
-8            5.0         3.4          1.5         0.2  setosa           1
-9            4.4         2.9          1.4         0.2  setosa           1
-5            5.0         3.6          1.4         0.2  setosa           1
-6            5.4         3.9          1.7         0.4  setosa           1
-9.1          4.4         2.9          1.4         0.2  setosa           1
-
-
-[[4]]
-[[4]]$train
-Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-22            5.1         3.7          1.5         0.4  setosa           0
-4             4.6         3.1          1.5         0.2  setosa           0
 1             5.1         3.5          1.4         0.2  setosa           0
 9             4.4         2.9          1.4         0.2  setosa           0
 4.1           4.6         3.1          1.5         0.2  setosa           0
+10.1          4.9         3.1          1.5         0.1  setosa           0
+7.1           4.6         3.4          1.4         0.3  setosa           0
+17            5.4         3.9          1.3         0.4  setosa           0
+22            5.1         3.7          1.5         0.4  setosa           0
+15            5.8         4.0          1.2         0.2  setosa           0
+23.1          4.6         3.6          1.0         0.2  setosa           0
+17.1          5.4         3.9          1.3         0.4  setosa           0
+15.1          5.8         4.0          1.2         0.2  setosa           0
+13            4.8         3.0          1.4         0.1  setosa           0
+
+Slot "test":
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+7            4.6         3.4          1.4         0.3  setosa           1
+12           4.8         3.4          1.6         0.2  setosa           1
+10           4.9         3.1          1.5         0.1  setosa           1
+7.1          4.6         3.4          1.4         0.3  setosa           1
+5            5.0         3.6          1.4         0.2  setosa           1
+22           5.1         3.7          1.5         0.4  setosa           1
+20           5.1         3.8          1.5         0.3  setosa           1
+
+Slot "train_ids":
+[1]  3 11 19 22 13 22 16 21  2 25 12 24 11 18  8 18  6 10
+
+Slot "test_ids":
+[1] 13 15  4 12 14  7  8
+
+
+$col2
+An object of class "sample_Rmach"
+Slot "train":
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+24            5.1         3.3          1.7         0.5  setosa           0
+1             5.1         3.5          1.4         0.2  setosa           0
+8             5.0         3.4          1.5         0.2  setosa           0
+16            5.7         4.4          1.5         0.4  setosa           0
+13            4.8         3.0          1.4         0.1  setosa           0
+9             4.4         2.9          1.4         0.2  setosa           0
+6             5.4         3.9          1.7         0.4  setosa           0
+22            5.1         3.7          1.5         0.4  setosa           0
+10            4.9         3.1          1.5         0.1  setosa           0
+21            5.4         3.4          1.7         0.2  setosa           0
+22.1          5.1         3.7          1.5         0.4  setosa           0
+16.1          5.7         4.4          1.5         0.4  setosa           0
+15            5.8         4.0          1.2         0.2  setosa           0
+5             5.0         3.6          1.4         0.2  setosa           0
+15.1          5.8         4.0          1.2         0.2  setosa           0
+16.2          5.7         4.4          1.5         0.4  setosa           0
+8.1           5.0         3.4          1.5         0.2  setosa           0
+10.1          4.9         3.1          1.5         0.1  setosa           0
+
+Slot "test":
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+13          4.8         3.0          1.4         0.1  setosa           1
+23          4.6         3.6          1.0         0.2  setosa           1
+24          5.1         3.3          1.7         0.5  setosa           1
+11          5.4         3.7          1.5         0.2  setosa           1
+9           4.4         2.9          1.4         0.2  setosa           1
+22          5.1         3.7          1.5         0.4  setosa           1
+10          4.9         3.1          1.5         0.1  setosa           1
+
+Slot "train_ids":
+[1] 22 12 19  5 18  6  6  1 19  5 13 15  1 12 10  8  9  6
+
+Slot "test_ids":
+[1] 15  9 22  7 15  2  3
+
+
+$col3
+An object of class "sample_Rmach"
+Slot "train":
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+19            5.7         3.8          1.7         0.3  setosa           0
+5             5.0         3.6          1.4         0.2  setosa           0
+7             4.6         3.4          1.4         0.3  setosa           0
+1             5.1         3.5          1.4         0.2  setosa           0
+15            5.8         4.0          1.2         0.2  setosa           0
+22            5.1         3.7          1.5         0.4  setosa           0
+14            4.3         3.0          1.1         0.1  setosa           0
+23            4.6         3.6          1.0         0.2  setosa           0
+11            5.4         3.7          1.5         0.2  setosa           0
+11.1          5.4         3.7          1.5         0.2  setosa           0
+17            5.4         3.9          1.3         0.4  setosa           0
+4             4.6         3.1          1.5         0.2  setosa           0
+9             4.4         2.9          1.4         0.2  setosa           0
+4.1           4.6         3.1          1.5         0.2  setosa           0
+4.2           4.6         3.1          1.5         0.2  setosa           0
+12            4.8         3.4          1.6         0.2  setosa           0
+5.1           5.0         3.6          1.4         0.2  setosa           0
+14.1          4.3         3.0          1.1         0.1  setosa           0
+
+Slot "test":
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+22            5.1         3.7          1.5         0.4  setosa           1
+1             5.1         3.5          1.4         0.2  setosa           1
+19            5.7         3.8          1.7         0.3  setosa           1
+4             4.6         3.1          1.5         0.2  setosa           1
+5             5.0         3.6          1.4         0.2  setosa           1
+24            5.1         3.3          1.7         0.5  setosa           1
+22.1          5.1         3.7          1.5         0.4  setosa           1
+
+Slot "train_ids":
+[1] 14  5  2 21  6 19  8  4  9  7  5  2  3 19  3 24 10 17
+
+Slot "test_ids":
+[1]  6 11  9 20 15  5 25
+
+
+$col4
+An object of class "sample_Rmach"
+Slot "train":
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+15            5.8         4.0          1.2         0.2  setosa           0
+23            4.6         3.6          1.0         0.2  setosa           0
+24            5.1         3.3          1.7         0.5  setosa           0
+22            5.1         3.7          1.5         0.4  setosa           0
+20            5.1         3.8          1.5         0.3  setosa           0
+8             5.0         3.4          1.5         0.2  setosa           0
 21            5.4         3.4          1.7         0.2  setosa           0
 14            4.3         3.0          1.1         0.1  setosa           0
-9.1           4.4         2.9          1.4         0.2  setosa           0
 3             4.7         3.2          1.3         0.2  setosa           0
-21.1          5.4         3.4          1.7         0.2  setosa           0
-20            5.1         3.8          1.5         0.3  setosa           0
-20.1          5.1         3.8          1.5         0.3  setosa           0
-23            4.6         3.6          1.0         0.2  setosa           0
-8             5.0         3.4          1.5         0.2  setosa           0
-9.2           4.4         2.9          1.4         0.2  setosa           0
+6             5.4         3.9          1.7         0.4  setosa           0
+9             4.4         2.9          1.4         0.2  setosa           0
+12            4.8         3.4          1.6         0.2  setosa           0
+2             4.9         3.0          1.4         0.2  setosa           0
+22.1          5.1         3.7          1.5         0.4  setosa           0
 8.1           5.0         3.4          1.5         0.2  setosa           0
-15            5.8         4.0          1.2         0.2  setosa           0
-24            5.1         3.3          1.7         0.5  setosa           0
+12.1          4.8         3.4          1.6         0.2  setosa           0
+18            5.1         3.5          1.4         0.3  setosa           0
+15.1          5.8         4.0          1.2         0.2  setosa           0
 
-[[4]]$test
+Slot "test":
 Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
-24          5.1         3.3          1.7         0.5  setosa           1
-23          4.6         3.6          1.0         0.2  setosa           1
-15          5.8         4.0          1.2         0.2  setosa           1
-4           4.6         3.1          1.5         0.2  setosa           1
-17          5.4         3.9          1.3         0.4  setosa           1
-3           4.7         3.2          1.3         0.2  setosa           1
-6           5.4         3.9          1.7         0.4  setosa           1
+16          5.7         4.4          1.5         0.4  setosa           1
+14          4.3         3.0          1.1         0.1  setosa           1
+8           5.0         3.4          1.5         0.2  setosa           1
+9           4.4         2.9          1.4         0.2  setosa           1
+20          5.1         3.8          1.5         0.3  setosa           1
+11          5.4         3.7          1.5         0.2  setosa           1
+18          5.1         3.5          1.4         0.3  setosa           1
+
+Slot "train_ids":
+[1]  8  2  7 24 21 17 14 22 14 23 19  8 21 20 17  7 13  6
+
+Slot "test_ids":
+[1] 10 12 17  9  3 19  1
+
+print(lst_test$col4$train) # to display the 4th train sample
+
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
+15            5.8         4.0          1.2         0.2  setosa           0
+23            4.6         3.6          1.0         0.2  setosa           0
+24            5.1         3.3          1.7         0.5  setosa           0
+22            5.1         3.7          1.5         0.4  setosa           0
+20            5.1         3.8          1.5         0.3  setosa           0
+8             5.0         3.4          1.5         0.2  setosa           0
+21            5.4         3.4          1.7         0.2  setosa           0
+14            4.3         3.0          1.1         0.1  setosa           0
+3             4.7         3.2          1.3         0.2  setosa           0
+6             5.4         3.9          1.7         0.4  setosa           0
+9             4.4         2.9          1.4         0.2  setosa           0
+12            4.8         3.4          1.6         0.2  setosa           0
+2             4.9         3.0          1.4         0.2  setosa           0
+22.1          5.1         3.7          1.5         0.4  setosa           0
+8.1           5.0         3.4          1.5         0.2  setosa           0
+12.1          4.8         3.4          1.6         0.2  setosa           0
+18            5.1         3.5          1.4         0.3  setosa           0
+15.1          5.8         4.0          1.2         0.2  setosa           0
 ```
 
 
