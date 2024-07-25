@@ -6054,7 +6054,7 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
     cur_vec <- abs(train[, 1] - test[I, 1])
     if (length(col_vars_train) > 1){
       for (i in 1:length(col_vars_train)){
-        cur_vec <- cur_vec + abs(train[, i] - test[I, i])
+        cur_vec <- cur_vec + abs(train[, col_vars_train[i]] - test[I, col_vars_test[i]])
       }
     }
     cur_votes <- c()
@@ -6068,7 +6068,6 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
   }
   return(rtn_v)
 }
-
 
 
 
