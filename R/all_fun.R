@@ -6287,10 +6287,10 @@ knn_Rmach_cross_validation_train <- function(inpt_datf,
     }
     rtn_v <- c()
     for (I in 1:n_fold) {
-      train_ids <- round(runif(n = nb_train, min = 1, max = nrow(inpt_datf)))
+      train_ids <- round(x = runif(n = nb_train, min = 1, max = nrow(inpt_datf)), digit = 0)
       cur_datf <- cbind(inpt_datf[train_ids, ], 
                   "test_status" = rep(x = 0, times = nb_train))
-      test_ids <- round(runif(n = (nrow(inpt_datf) - nb_train), min = 1, max = nrow(inpt_datf)))
+      test_ids <- round(x = runif(n = (nrow(inpt_datf) - nb_train), min = 1, max = nrow(inpt_datf)), digit = 0)
       cur_datf2 <- cbind(
                           inpt_datf[test_ids, ], 
                           "test_status" = rep(x = 1, times = (nrow(inpt_datf) - nb_train))
