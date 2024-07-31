@@ -6049,6 +6049,7 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
   if (typeof(class_col) == "character"){ 
     class_col <- match(x = class_col, table = colnames(train))
   }
+  if (k >= nrow(test)){ return("value of k too high") }
   rtn_v <- c()
   for (I in 1:nrow(test)){
     cur_vec <- abs(train[, 1] - test[I, 1])
@@ -6138,6 +6139,7 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
       class_col <- match(x = class_col, table = colnames(train))
     }
     rtn_v <- c()
+    if (k >= nrow(test)){ return("Value of k too high") }
     for (I in 1:nrow(test)){
       cur_vec <- abs(train[, 1] - test[I, 1])
       if (length(col_vars_train) > 1){
@@ -6282,6 +6284,7 @@ knn_Rmach_cross_validation_train <- function(inpt_datf,
       class_col <- match(x = class_col, table = colnames(train))
     }
     rtn_v <- c()
+    if (k >= nrow(test)){ return("Value of k too high") }
     for (I in 1:nrow(test)){
       cur_vec <- abs(train[, 1] - test[I, 1])
       if (length(col_vars_train) > 1){
