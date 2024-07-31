@@ -6194,7 +6194,6 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
   }
   folds <- v_Rmach_fold(inpt_datf = inpt_datf, train_prop = train_prop, n_fold = n_fold)   
   Rslt_v <- c()
-  Un_v <- c()
   pre_nrow <- round(nrow(inpt_datf) * train_prop)
   for (k_val in knn_v){
     rslt_v <- c()
@@ -6209,9 +6208,8 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
       rslt_v <- c(rslt_v, sum(inpt_datf[folds[[i]]@test_ids, class_col] == cur_rslt))
     }
     Rslt_v <- c(Rslt_v, mean(rslt_v))
-    Un_v <- c(Un_v, pre_nrow)
   }
-  return(Rslt_v / Un_v)
+  return(Rslt_v / pre_nrow)
 }
 
 #' knn_Rmach_cross_validation_train
