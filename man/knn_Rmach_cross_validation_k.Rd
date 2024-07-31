@@ -27,7 +27,7 @@ knn_Rmach_cross_validation_k(
 \item{class_col}{is the column names or number of the variable to predict in the input dataframe}
 }
 \description{
-Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
+Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique individuals in the current dataset where the training occurred. So, higher is better.
 }
 \examples{
 

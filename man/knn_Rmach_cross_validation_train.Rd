@@ -27,7 +27,7 @@ knn_Rmach_cross_validation_train(
 \item{knn_v}{is a vector containing the values of k neighbours to test}
 }
 \description{
-Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
+Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of individuals in the current dataset where the training occurred. So, higher is better.
 }
 \examples{
 
