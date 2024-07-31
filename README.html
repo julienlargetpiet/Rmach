@@ -355,7 +355,7 @@ ACB  AC CAC  BA BAA
 
 </div>
 </body></html>
-<!DOCTYPE html><html><head><title>R: knn_Rmach_cross_validation</title>
+<!DOCTYPE html><html><head><title>R: knn_Rmach_cross_validation_k</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
@@ -371,9 +371,9 @@ function processMathHTML() {
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body><div class="container"><main>
 
-<table style="width: 100%;"><tr><td>knn_Rmach_cross_validation</td><td style="text-align: right;">R Documentation</td></tr></table>
+<table style="width: 100%;"><tr><td>knn_Rmach_cross_validation_k</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>knn_Rmach_cross_validation</h2>
+<h2>knn_Rmach_cross_validation_k</h2>
 
 <h3>Description</h3>
 
@@ -383,7 +383,7 @@ function processMathHTML() {
 
 <h3>Usage</h3>
 
-<pre><code class='language-R'>knn_Rmach_cross_validation(
+<pre><code class='language-R'>knn_Rmach_cross_validation_k(
   inpt_datf,
   train_prop,
   knn_v = c(),
@@ -428,7 +428,7 @@ function processMathHTML() {
 
 <pre><code class='language-R'>
 iris[, 5] &lt;- as.character(iris[, 5])
-print(knn_Rmach_cross_validation(
+print(knn_Rmach_cross_validation_k(
         inpt_datf = iris,
         col_vars = c(1:4),
         n_fold = 5,
@@ -440,6 +440,98 @@ print(knn_Rmach_cross_validation(
 [1] 0.1303704 0.1303704 0.1333333 0.1288889 0.1259259
 
 # here the optimal k value is 7
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
+<!DOCTYPE html><html><head><title>R: knn_Rmach_cross_validation_train</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>knn_Rmach_cross_validation_train</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>knn_Rmach_cross_validation_train</h2>
+
+<h3>Description</h3>
+
+<p>Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>knn_Rmach_cross_validation_train(
+  inpt_datf,
+  train_prop_v = c(),
+  k,
+  n_fold = 5,
+  col_vars = c(),
+  class_col
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt_datf">inpt_datf</code></td>
+<td>
+<p>is the input dataset as a ddataframe</p>
+</td></tr>
+<tr><td><code id="n_fold">n_fold</code></td>
+<td>
+<p>is the number of fold used for each value of k, the higher this value is, he more accurate the result will be but the higher the amount of time it will takes</p>
+</td></tr>
+<tr><td><code id="col_vars">col_vars</code></td>
+<td>
+<p>is a vector containing the column names or numbers of the variables in the input dataframe</p>
+</td></tr>
+<tr><td><code id="class_col">class_col</code></td>
+<td>
+<p>is the column names or number of the variable to predict in the input dataframe</p>
+</td></tr>
+<tr><td><code id="train_prop">train_prop</code></td>
+<td>
+<p>is the training proportion</p>
+</td></tr>
+<tr><td><code id="knn_v">knn_v</code></td>
+<td>
+<p>is a vector containing the values of k neighbours to test</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+iris[, 5] &lt;- as.character(iris[, 5])
+print(knn_Rmach_cross_validation_train(
+        inpt_datf = iris,
+        col_vars = c(1:4),
+        n_fold = 15,
+        k = 7,
+        class_col = 5,
+        train_prop_v = c(0.7, 0.75, 0.8)
+))
+
+[1] 0.1175309 0.1000000 0.1088889
+
+# here the optimal training proportion is 0.7
 
 </code></pre>
 

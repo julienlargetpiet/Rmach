@@ -201,7 +201,7 @@ ACB  AC CAC  BA BAA
   1   2   1   2   1
 ```
 
-# knn_Rmach_cross_validation
+# knn_Rmach_cross_validation_k
 
 ## Description
 
@@ -210,7 +210,7 @@ Allow to perform knn with cross validation for the optimal value of k neighbours
 ## Usage
 
 ```r
-knn_Rmach_cross_validation(
+knn_Rmach_cross_validation_k(
   inpt_datf,
   train_prop,
   knn_v = c(),
@@ -233,7 +233,7 @@ knn_Rmach_cross_validation(
 
 ```r
 iris[, 5] <- as.character(iris[, 5])
-print(knn_Rmach_cross_validation(
+print(knn_Rmach_cross_validation_k(
         inpt_datf = iris,
         col_vars = c(1:4),
         n_fold = 5,
@@ -245,6 +245,52 @@ print(knn_Rmach_cross_validation(
 [1] 0.1303704 0.1303704 0.1333333 0.1288889 0.1259259
 
 # here the optimal k value is 7
+```
+
+# knn_Rmach_cross_validation_train
+
+## Description
+
+Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+
+## Usage
+
+```r
+knn_Rmach_cross_validation_train(
+  inpt_datf,
+  train_prop_v = c(),
+  k,
+  n_fold = 5,
+  col_vars = c(),
+  class_col
+)
+```
+
+## Arguments
+
+* `inpt_datf`: is the input dataset as a ddataframe
+* `n_fold`: is the number of fold used for each value of k, the higher this value is, he more accurate the result will be but the higher the amount of time it will takes
+* `col_vars`: is a vector containing the column names or numbers of the variables in the input dataframe
+* `class_col`: is the column names or number of the variable to predict in the input dataframe
+* `train_prop`: is the training proportion
+* `knn_v`: is a vector containing the values of k neighbours to test
+
+## Examples
+
+```r
+iris[, 5] <- as.character(iris[, 5])
+print(knn_Rmach_cross_validation_train(
+        inpt_datf = iris,
+        col_vars = c(1:4),
+        n_fold = 15,
+        k = 7,
+        class_col = 5,
+        train_prop_v = c(0.7, 0.75, 0.8)
+))
+
+[1] 0.1175309 0.1000000 0.1088889
+
+# here the optimal training proportion is 0.7
 ```
 
 # knn_Rmach
