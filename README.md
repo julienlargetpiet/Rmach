@@ -201,6 +201,52 @@ ACB  AC CAC  BA BAA
   1   2   1   2   1
 ```
 
+# knn_Rmach_cross_validation
+
+## Description
+
+Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+
+## Usage
+
+```r
+knn_Rmach_cross_validation(
+  inpt_datf,
+  train_prop,
+  knn_v = c(),
+  n_fold = 5,
+  col_vars = c(),
+  class_col
+)
+```
+
+## Arguments
+
+* `inpt_datf`: is the input dataset as a ddataframe
+* `train_prop`: is the training proportion
+* `knn_v`: is a vector containing the values of k neighbours to test
+* `n_fold`: is the number of fold used for each value of k, the higher this value is, he more accurate the result will be but the higher the amount of time it will takes
+* `col_vars`: is a vector containing the column names or numbers of the variables in the input dataframe
+* `class_col`: is the column names or number of the variable to predict in the input dataframe
+
+## Examples
+
+```r
+iris[, 5] <- as.character(iris[, 5])
+print(knn_Rmach_cross_validation(
+        inpt_datf = iris,
+        col_vars = c(1:4),
+        n_fold = 5,
+        knn_v = c(3, 5, 7, 9, 11),
+        class_col = 5,
+        train_prop = 0.7
+))
+
+[1] 0.1303704 0.1303704 0.1333333 0.1288889 0.1259259
+
+# here the optimal k value is 7
+```
+
 # knn_Rmach
 
 ## Description

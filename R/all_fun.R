@@ -6069,5 +6069,149 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
   return(rtn_v)
 }
 
+#' knn_Rmach_cross_validation
+#'
+#' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+#'
+#' @param inpt_datf is the input dataset as a ddataframe
+#' @param train_prop is the training proportion
+#' @param knn_v is a vector containing the values of k neighbours to test
+#' @param n_fold is the number of fold used for each value of k, the higher this value is, he more accurate the result will be but the higher the amount of time it will takes
+#' @param col_vars is a vector containing the column names or numbers of the variables in the input dataframe
+#' @param class_col is the column names or number of the variable to predict in the input dataframe
+#'
+#' @examples
+#'
+#' iris[, 5] <- as.character(iris[, 5])
+#' print(knn_Rmach_cross_validation(
+#'         inpt_datf = iris,
+#'         col_vars = c(1:4),
+#'         n_fold = 5,
+#'         knn_v = c(3, 5, 7, 9, 11),
+#'         class_col = 5,
+#'         train_prop = 0.7
+#' ))
+#'
+#' [1] 0.1303704 0.1303704 0.1333333 0.1288889 0.1259259
+#'
+#' # here the optimal k value is 7
+#'
+#' @export
+
+knn_Rmach_cross_validation <- function(inpt_datf, 
+                                       train_prop, 
+                                       knn_v = c(),
+                                       n_fold = 5,
+                                       col_vars = c(),
+                                       class_col){
+  knn_Rmach <- function(train, test, k, col_vars_train = c(), 
+                        col_vars_test = c(), class_col){
+    see_mode <- function(inpt_v = c()){
+      unique_total <- function(inpt_v = c()){
+        rtn_v <- c()
+        for (el in unique(inpt_v)){
+          rtn_v <- c(rtn_v, length(grep(pattern = paste0("^", el, "$"), x = inpt_v)))
+        }
+        return(rtn_v)
+      }
+      return(unique(inpt_v)[which.max(unique_total(inpt_v))])
+    }
+    if (typeof(col_vars_train) == "character"){
+      for (i in 1:length(col_vars_train)){
+        col_vars_train[i] <- match(x = col_vars_train[i], 
+                                   table = colnames(train))
+      }
+      col_vars_train <- as.numeric(col_vars_train)
+    }else if (length(col_vars_train) == 0){
+      col_vars_train <- c(1:(ncol(train) - 1))
+    }
+    if (typeof(col_vars_test) == "character"){
+      for (i in 1:length(col_vars_test)){
+        col_vars_test[i] <- match(x = col_vars_test[i], 
+                                   table = colnames(test))
+      }
+      col_vars_test <- as.numeric(col_vars_test)
+    }else if (length(col_vars_test) == 0){
+      col_vars_train <- c(1:ncol(test))
+    }
+    if (typeof(class_col) == "character"){ 
+      class_col <- match(x = class_col, table = colnames(train))
+    }
+    rtn_v <- c()
+    for (I in 1:nrow(test)){
+      cur_vec <- abs(train[, 1] - test[I, 1])
+      if (length(col_vars_train) > 1){
+        for (i in 1:length(col_vars_train)){
+          cur_vec <- cur_vec + abs(train[, col_vars_train[i]] - test[I, col_vars_test[i]])
+        }
+      }
+      cur_votes <- c()
+      cur_max <- max(cur_vec) + 1
+      for (i in 1:k){
+        cur_id <- which.min(cur_vec)
+        cur_votes <- c(cur_votes, as.character(train[cur_id, class_col]))
+        cur_vec[cur_id] <- cur_max
+      }
+      rtn_v <- c(rtn_v, see_mode(inpt_v = cur_votes)) 
+    }
+    return(rtn_v)
+  }
+  v_Rmach_fold <- function(inpt_datf, train_prop, n_fold){
+    nb_train <- train_prop * nrow(inpt_datf)
+    if (str_detect(pattern = "\\.", 
+          string = nb_train)){
+      nb_train <- round(x = nb_train, digits = 0)
+    }
+    if (nb_train == 1){
+      return("Training number too high")
+    }else if (nb_train == 0){
+      return("Training number too low")
+    }
+    rtn_v <- c()
+    for (I in 1:n_fold) {
+      train_ids <- round(runif(n = nb_train, min = 1, max = nrow(inpt_datf)))
+      cur_datf <- cbind(inpt_datf[runif(n = nb_train, 
+                  min = 1, max = nrow(inpt_datf)),], 
+                  "test_status" = rep(x = 0, times = nb_train))
+      test_ids <- round(runif(n = (nrow(inpt_datf) - nb_train), min = 1, max = nrow(inpt_datf)))
+      cur_datf2 <- cbind(
+                          inpt_datf[runif(n = (nrow(inpt_datf) - nb_train), 
+                          min = 1, max = nrow(inpt_datf)),], 
+                          "test_status" = rep(x = 1, times = (nrow(inpt_datf) - nb_train))
+                    ) 
+      rtn_v <- c(rtn_v,
+      new("sample_Rmach", 
+          train = cur_datf,
+          test = cur_datf2,
+          train_ids = train_ids,
+          test_ids = test_ids
+          ))
+    }
+    names(rtn_v) <- paste0("sample", (seq(from = 1, to = length(rtn_v), by = 1)))
+    return(rtn_v)
+  }
+  folds <- v_Rmach_fold(inpt_datf = inpt_datf, train_prop = train_prop, n_fold = n_fold)   
+  Rslt_v <- c()
+  Un_v <- c()
+  for (k_val in knn_v){
+    rslt_v <- c()
+    un_v <- c()
+    for (i in 1:length(folds)){
+      cur_rslt <- knn_Rmach(train = folds[[i]]@train,
+                                    test = folds[[i]]@test,
+                                    k = k_val,
+                                    col_vars_train = col_vars,
+                                    col_vars_test = col_vars,
+                                    class_col = class_col
+                            )
+      rslt_v <- c(rslt_v, (inpt_datf[folds[[i]]@test_ids, class_col] == cur_rslt))
+      un_v <- c(un_v, length(unique(folds[[i]]@train[, class_col])))
+    }
+    Rslt_v <- c(Rslt_v, mean(rslt_v))
+    Un_v <- c(Un_v, mean(un_v))
+  }
+  return(Rslt_v / Un_v)
+}
+
 
 
