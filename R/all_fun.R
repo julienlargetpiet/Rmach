@@ -6069,9 +6069,9 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
 #'         train_prop = 0.7
 #' ))
 #'
-#' [1] 0.4038095 0.4038095 0.4076190 0.4019048 0.4000000
+#' [1] 0.9333333 0.9200000 0.9333333 0.9466667 0.9288889
 #'
-#' # here the optimal k value is 7
+#' # here the optimal k value is 9
 #'
 #' @export
 
@@ -6114,8 +6114,8 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
     if (typeof(class_col) == "character"){ 
       class_col <- match(x = class_col, table = colnames(train))
     }
+    if (k >= nrow(test)){ return("value of k too high") }
     rtn_v <- c()
-    if (k >= nrow(test)){ return("Value of k too high") }
     for (I in 1:nrow(test)){
       cur_vec <- abs(train[, 1] - test[I, 1])
       if (length(col_vars_train) > 1){
@@ -6147,14 +6147,14 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
     }
     rtn_v <- c()
     for (I in 1:n_fold) {
-      train_ids <- round(runif(n = nb_train, min = 1, max = nrow(inpt_datf)))
-      cur_datf <- cbind(inpt_datf[train_ids, ], 
+      train_ids <- round(x = runif(n = nb_train, min = 1, max = nrow(inpt_datf)), digit = 0)
+      cur_datf <- cbind(inpt_datf[train_ids,], 
                   "test_status" = rep(x = 0, times = nb_train))
-      test_ids <- round(runif(n = (nrow(inpt_datf) - nb_train), min = 1, max = nrow(inpt_datf)))
+      test_ids <- round(x = runif(n = (nrow(inpt_datf) - nb_train), min = 1, max = nrow(inpt_datf)), digit = 0)
       cur_datf2 <- cbind(
-                          inpt_datf[test_ids, ], 
+                          inpt_datf[test_ids,], 
                           "test_status" = rep(x = 1, times = (nrow(inpt_datf) - nb_train))
-                    ) 
+                    )
       rtn_v <- c(rtn_v,
       new("sample_Rmach", 
           train = cur_datf,
@@ -6168,7 +6168,7 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
   }
   folds <- v_Rmach_fold(inpt_datf = inpt_datf, train_prop = train_prop, n_fold = n_fold)   
   Rslt_v <- c()
-  pre_nrow <- round(nrow(inpt_datf) * train_prop)
+  pre_nrow <- round(nrow(inpt_datf) * (1 - train_prop))
   for (k_val in knn_v){
     rslt_v <- c()
     for (i in 1:length(folds)){
