@@ -6071,7 +6071,7 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
 
 #' knn_Rmach_cross_validation_k
 #'
-#' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+#' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
 #'
 #' @param inpt_datf is the input dataset as a ddataframe
 #' @param train_prop is the training proportion
@@ -6215,7 +6215,7 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
 
 #' knn_Rmach_cross_validation_train
 #'
-#' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+        #' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
 #'
 #' @param inpt_datf is the input dataset as a ddataframe
 #' @param train_prop is the training proportion
