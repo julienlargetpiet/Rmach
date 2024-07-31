@@ -205,7 +205,7 @@ ACB  AC CAC  BA BAA
 
 ## Description
 
-Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
 
 ## Usage
 
@@ -242,7 +242,7 @@ print(knn_Rmach_cross_validation_k(
         train_prop = 0.7
 ))
 
-[1] 0.1303704 0.1303704 0.1333333 0.1288889 0.1259259
+[1] 0.1657143 0.1657143 0.1657143 0.1657143 0.1657143
 
 # here the optimal k value is 7
 ```
@@ -251,7 +251,7 @@ print(knn_Rmach_cross_validation_k(
 
 ## Description
 
-Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters.
+Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
 
 ## Usage
 
@@ -288,7 +288,7 @@ print(knn_Rmach_cross_validation_train(
         train_prop_v = c(0.7, 0.75, 0.8)
 ))
 
-[1] 0.1175309 0.1000000 0.1088889
+[1] 0.1346032 0.1113095 0.0800000
 
 # here the optimal training proportion is 0.7
 ```

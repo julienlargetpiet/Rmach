@@ -6072,7 +6072,7 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
 
 #' knn_Rmach_cross_validation_k
 #'
-#' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
+#' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique individuals in the current dataset where the training occurred. So, higher is better.
 #'
 #' @param inpt_datf is the input dataset as a ddataframe
 #' @param train_prop is the training proportion
@@ -6093,7 +6093,7 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
 #'         train_prop = 0.7
 #' ))
 #'
-#' [1] 0.1303704 0.1303704 0.1333333 0.1288889 0.1259259
+#' [1] 0.1657143 0.1657143 0.1657143 0.1657143 0.1657143
 #'
 #' # here the optimal k value is 7
 #'
@@ -6195,9 +6195,9 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
   folds <- v_Rmach_fold(inpt_datf = inpt_datf, train_prop = train_prop, n_fold = n_fold)   
   Rslt_v <- c()
   Un_v <- c()
+  pre_nrow <- round(nrow(inpt_datf) * train_prop)
   for (k_val in knn_v){
     rslt_v <- c()
-    un_v <- c()
     for (i in 1:length(folds)){
       cur_rslt <- knn_Rmach(train = folds[[i]]@train,
                                     test = folds[[i]]@test,
@@ -6207,17 +6207,16 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
                                     class_col = class_col
                             )
       rslt_v <- c(rslt_v, sum(inpt_datf[folds[[i]]@test_ids, class_col] == cur_rslt))
-      un_v <- c(un_v, length(unique(folds[[i]]@train[, class_col])))
     }
     Rslt_v <- c(Rslt_v, mean(rslt_v))
-    Un_v <- c(Un_v, mean(un_v))
+    Un_v <- c(Un_v, pre_nrow)
   }
   return(Rslt_v / Un_v)
 }
 
 #' knn_Rmach_cross_validation_train
 #'
-        #' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of unique labels in the current dataset where the training occurred. So, higher is better.
+#' Allow to perform knn with cross validation for the optimal value of k neighbours used, see examples and parameters. The result outputed is a vector containing the ratio of correct label found divided by the total number of individuals in the current dataset where the training occurred. So, higher is better.
 #'
 #' @param inpt_datf is the input dataset as a ddataframe
 #' @param train_prop is the training proportion
@@ -6238,7 +6237,7 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
 #'         train_prop_v = c(0.7, 0.75, 0.8)
 #' ))
 #'
-#' [1] 0.1175309 0.1000000 0.1088889
+#' [1] 0.1346032 0.1113095 0.0800000
 #'
 #' # here the optimal training proportion is 0.7
 #'
@@ -6352,14 +6351,12 @@ knn_Rmach_cross_validation_train <- function(inpt_datf,
                                     class_col = class_col
                             )
       rslt_v <- c(rslt_v, sum(inpt_datf[folds[[i]]@test_ids, class_col] == cur_rslt))
-      un_v <- c(un_v, length(unique(folds[[i]]@train[, class_col])))
+      un_v <- c(un_v, round(nrow(inpt_datf) * trp))
     }
     Rslt_v <- c(Rslt_v, mean(rslt_v))
     Un_v <- c(Un_v, mean(un_v))
   }
   return(Rslt_v / Un_v)
 }
-
-
 
 
