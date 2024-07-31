@@ -41,7 +41,7 @@ print(knn_Rmach_cross_validation_k(
         train_prop = 0.7
 ))
 
-[1] 0.1657143 0.1657143 0.1657143 0.1657143 0.1657143
+[1] 0.4038095 0.4038095 0.4076190 0.4019048 0.4000000
 
 # here the optimal k value is 7
 

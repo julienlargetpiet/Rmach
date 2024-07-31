@@ -6069,7 +6069,7 @@ knn_Rmach <- function(train, test, k, col_vars_train = c(),
 #'         train_prop = 0.7
 #' ))
 #'
-#' [1] 0.1657143 0.1657143 0.1657143 0.1657143 0.1657143
+#' [1] 0.4038095 0.4038095 0.4076190 0.4019048 0.4000000
 #'
 #' # here the optimal k value is 7
 #'
@@ -6148,13 +6148,11 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
     rtn_v <- c()
     for (I in 1:n_fold) {
       train_ids <- round(runif(n = nb_train, min = 1, max = nrow(inpt_datf)))
-      cur_datf <- cbind(inpt_datf[runif(n = nb_train, 
-                  min = 1, max = nrow(inpt_datf)),], 
+      cur_datf <- cbind(inpt_datf[train_ids, ], 
                   "test_status" = rep(x = 0, times = nb_train))
       test_ids <- round(runif(n = (nrow(inpt_datf) - nb_train), min = 1, max = nrow(inpt_datf)))
       cur_datf2 <- cbind(
-                          inpt_datf[runif(n = (nrow(inpt_datf) - nb_train), 
-                          min = 1, max = nrow(inpt_datf)),], 
+                          inpt_datf[test_ids, ], 
                           "test_status" = rep(x = 1, times = (nrow(inpt_datf) - nb_train))
                     ) 
       rtn_v <- c(rtn_v,
@@ -6211,7 +6209,7 @@ knn_Rmach_cross_validation_k <- function(inpt_datf,
 #'         train_prop_v = c(0.7, 0.75, 0.8)
 #' ))
 #'
-#' [1] 0.1346032 0.1113095 0.0800000
+#' [1] 0.4057143 0.3273810 0.2400000
 #'
 #' # here the optimal training proportion is 0.7
 #'
@@ -6290,13 +6288,11 @@ knn_Rmach_cross_validation_train <- function(inpt_datf,
     rtn_v <- c()
     for (I in 1:n_fold) {
       train_ids <- round(runif(n = nb_train, min = 1, max = nrow(inpt_datf)))
-      cur_datf <- cbind(inpt_datf[runif(n = nb_train, 
-                  min = 1, max = nrow(inpt_datf)),], 
+      cur_datf <- cbind(inpt_datf[train_ids, ], 
                   "test_status" = rep(x = 0, times = nb_train))
       test_ids <- round(runif(n = (nrow(inpt_datf) - nb_train), min = 1, max = nrow(inpt_datf)))
       cur_datf2 <- cbind(
-                          inpt_datf[runif(n = (nrow(inpt_datf) - nb_train), 
-                          min = 1, max = nrow(inpt_datf)),], 
+                          inpt_datf[test_ids, ], 
                           "test_status" = rep(x = 1, times = (nrow(inpt_datf) - nb_train))
                     ) 
       rtn_v <- c(rtn_v,
