@@ -5755,12 +5755,6 @@ individual_route <- function(inpt_datf, col_target, id_col, untl_last = 2){
 #' @param train_prop is the training proportion 
 #' @param n_fold is the number of distinc pair of training and test dataset that will be outputed
 #'
-#' @importFrom methods setClass
-methods::setClass("sample_Rmach", 
-           slots = list("train" = "data.frame",
-                        "test" = "data.frame",
-                        "train_ids" = "numeric",
-                        "test_ids" = "numeric"))
 #' @examples
 #'
 #' lst_test <- v_Rmach_fold(inpt_datf = iris[1:25,],
@@ -5769,7 +5763,7 @@ methods::setClass("sample_Rmach",
 #'
 #' print(lst_test)
 #'
-#' $col1
+#' $sample1
 #' An object of class "sample_Rmach"
 #' Slot "train":
 #'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -5809,7 +5803,7 @@ methods::setClass("sample_Rmach",
 #' [1] 13 15  4 12 14  7  8
 #' 
 #' 
-#' $col2
+#' $sample2
 #' An object of class "sample_Rmach"
 #' Slot "train":
 #'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -5849,7 +5843,7 @@ methods::setClass("sample_Rmach",
 #' [1] 15  9 22  7 15  2  3
 #' 
 #' 
-#' $col3
+#' $sample3
 #' An object of class "sample_Rmach"
 #' Slot "train":
 #'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -5889,7 +5883,7 @@ methods::setClass("sample_Rmach",
 #' [1]  6 11  9 20 15  5 25
 #' 
 #' 
-#' $col4
+#' $sample4
 #' An object of class "sample_Rmach"
 #' Slot "train":
 #'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -5928,7 +5922,7 @@ methods::setClass("sample_Rmach",
 #' Slot "test_ids":
 #' [1] 10 12 17  9  3 19  1
 #'
-#' print(lst_test$col4$train) # to display the 4th train sample
+#' print(lst_test$sample4$train) # to display the 4th train sample
 #'
 #'      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
 #' 15            5.8         4.0          1.2         0.2  setosa           0
@@ -5951,6 +5945,12 @@ methods::setClass("sample_Rmach",
 #' 15.1          5.8         4.0          1.2         0.2  setosa           0
 #'
 #' @export
+#' @importFrom methods setClass
+methods::setClass("sample_Rmach", 
+           slots = list("train" = "data.frame",
+                        "test" = "data.frame",
+                        "train_ids" = "numeric",
+                        "test_ids" = "numeric"))
 
 v_Rmach_fold <- function(inpt_datf, train_prop, n_fold){
   nb_train <- train_prop * nrow(inpt_datf)

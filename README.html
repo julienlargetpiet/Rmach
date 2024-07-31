@@ -642,60 +642,6 @@ train and test, see examples and variables
 </td></tr>
 </table>
 
-</main>
-
-</div>
-</body></html>
-<!DOCTYPE html><html><head><title>R: v_Rmach_fold</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
-<script type="text/javascript">
-const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
-function processMathHTML() {
-    var l = document.getElementsByClassName('reqn');
-    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
-    return;
-}</script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
-    onload="processMathHTML();"></script>
-<link rel="stylesheet" type="text/css" href="R.css" />
-</head><body><div class="container"><main>
-
-<table style="width: 100%;"><tr><td>v_Rmach_fold</td><td style="text-align: right;">R Documentation</td></tr></table>
-
-<h2>v_Rmach_fold</h2>
-
-<h3>Description</h3>
-
-<p>Allow to create uniform sampling dataset for cross validation,
-train and test, see examples and variables
-</p>
-
-
-<h3>Usage</h3>
-
-<pre><code class='language-R'>v_Rmach_fold(inpt_datf, train_prop, n_fold)
-</code></pre>
-
-
-<h3>Arguments</h3>
-
-<table>
-<tr><td><code id="inpt_datf">inpt_datf</code></td>
-<td>
-<p>is the input dataframe</p>
-</td></tr>
-<tr><td><code id="train_prop">train_prop</code></td>
-<td>
-<p>is the training proportion</p>
-</td></tr>
-<tr><td><code id="n_fold">n_fold</code></td>
-<td>
-<p>is the number of distinc pair of training and test dataset that will be outputed</p>
-</td></tr>
-</table>
-
 
 <h3>Examples</h3>
 
@@ -703,9 +649,10 @@ train and test, see examples and variables
 lst_test &lt;- v_Rmach_fold(inpt_datf = iris[1:25,],
              train_prop = 0.7,
              n_fold = 4)
+
 print(lst_test)
 
-$col1
+$sample1
 An object of class "sample_Rmach"
 Slot "train":
      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -745,7 +692,7 @@ Slot "test_ids":
 [1] 13 15  4 12 14  7  8
 
 
-$col2
+$sample2
 An object of class "sample_Rmach"
 Slot "train":
      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -785,7 +732,7 @@ Slot "test_ids":
 [1] 15  9 22  7 15  2  3
 
 
-$col3
+$sample3
 An object of class "sample_Rmach"
 Slot "train":
      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -825,7 +772,7 @@ Slot "test_ids":
 [1]  6 11  9 20 15  5 25
 
 
-$col4
+$sample4
 An object of class "sample_Rmach"
 Slot "train":
      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
@@ -864,7 +811,7 @@ Slot "train_ids":
 Slot "test_ids":
 [1] 10 12 17  9  3 19  1
 
-print(lst_test$col4$train) # to display the 4th train sample
+print(lst_test$sample4$train) # to display the 4th train sample
 
      Sepal.Length Sepal.Width Petal.Length Petal.Width Species test_status
 15            5.8         4.0          1.2         0.2  setosa           0
