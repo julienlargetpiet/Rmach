@@ -6528,9 +6528,13 @@ individual_cloning <- function(inpt_datf, col_vars = c(), label_var, hmn){
     cur_sd_v <- c()
     cur_mean_v <- c()
     cur_id_v <- grep(pattern = el, x = inpt_datf[, label_var])
-    for (i in col_vars){
-      cur_sd_v <- c(cur_sd_v, sd(inpt_datf[cur_id_v, i]))     
-      cur_mean_v <- c(cur_mean_v, mean(inpt_datf[cur_id_v, i]))      
+    if (length(cur_id_v) > 1){
+      for (i in col_vars){
+        cur_sd_v <- c(cur_sd_v, sd(inpt_datf[cur_id_v, i]))     
+        cur_mean_v <- c(cur_mean_v, mean(inpt_datf[cur_id_v, i]))      
+      }
+    }else{
+      print(paste("Can not calculate standard deviation because", el, "is present just one time."))    
     }
     for (I in 1:hmn){
       cur_row2 <- cur_row
@@ -6948,9 +6952,13 @@ individual_equalizer_min <- function(inpt_datf, col_vars = c(), label_var, untl)
       cur_sd_v <- c()
       cur_mean_v <- c()
       cur_id_v <- grep(pattern = el, x = inpt_datf[, label_var])
-      for (i in col_vars){
-        cur_sd_v <- c(cur_sd_v, sd(inpt_datf[cur_id_v, i]))     
-        cur_mean_v <- c(cur_mean_v, mean(inpt_datf[cur_id_v, i]))      
+      if (length(cur_id_v) > 1){
+        for (i in col_vars){
+          cur_sd_v <- c(cur_sd_v, sd(inpt_datf[cur_id_v, i]))     
+          cur_mean_v <- c(cur_mean_v, mean(inpt_datf[cur_id_v, i]))      
+        }
+      }else{
+         print(paste("Can not calculate standard deviation because", el, "is present just one time."))
       }
       for (I in 1:cur_untl){
         cur_row2 <- cur_row
