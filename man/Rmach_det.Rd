@@ -60,7 +60,7 @@ print(Rmach_det(inpt_matr = mtr_test8))
 
 det(mtr_test9)
 [1] 0
-print(Rmach_det(inpt_matr = mtr_test2))
+print(Rmach_det(inpt_matr = mtr_test9))
 [1] 0
 
 }

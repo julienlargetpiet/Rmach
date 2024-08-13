@@ -8042,7 +8042,7 @@ lm_label_generation2 <- function(inpt_datf,
 #'
 #' det(mtr_test9)
 #' [1] 0
-#' print(Rmach_det(inpt_matr = mtr_test2))
+#' print(Rmach_det(inpt_matr = mtr_test9))
 #' [1] 0
 #'
 #' @export
@@ -8145,4 +8145,6 @@ Rmach_det <- function(inpt_matr){
   }
   return(rtn_val)
 }
+
+
 
