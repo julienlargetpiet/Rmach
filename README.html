@@ -2463,6 +2463,105 @@ print(poly_model(inpt_datf=data.frame(mtcars$wt, mtcars$mpg), degree=2, coeff_v=
 
 </div>
 </body></html>
+<!DOCTYPE html><html><head><title>R: Rmach_det</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>Rmach_det</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Rmach_det</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the determinant of any square matrix, see examples
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>Rmach_det(inpt_matr)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt_matr">inpt_matr</code></td>
+<td>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+mtr_test2 &lt;- matrix(nrow = 2, ncol = 2, data = c(4:6, 37))
+mtr_test3 &lt;- matrix(nrow = 3, ncol = 3, data = c(4:6, 37, 12, 33, 1, 2, 3))
+mtr_test4 &lt;- matrix(nrow = 4, ncol = 4, data = c(4:6, 37, 12, 33, 1, 2, 3, 8, 7, 8, 7, 11, 22, 21))
+mtr_test5 &lt;- matrix(nrow = 5, ncol = 5, data = c(1:25))
+mtr_test6 &lt;- matrix(nrow = 6, ncol = 6, data = c(1:36))
+mtr_test7 &lt;- matrix(nrow = 7, ncol = 7, data = c(1:49))
+mtr_test8 &lt;- matrix(nrow = 8, ncol = 8, data = c(1:64))
+mtr_test9 &lt;- matrix(nrow = 9, ncol = 9, data = c(1:81))
+
+det(mtr_test2)
+[1] 118
+print(Rmach_det(inpt_matr = mtr_test2))
+[1] 118
+
+det(mtr_test3)
+[1] -138 
+print(Rmach_det(inpt_matr = mtr_test3))
+[1] -138
+
+det(mtr_test4)
+[1] -20001
+print(Rmach_det(inpt_matr = mtr_test4))
+[1] -20001
+
+det(mtr_test5)
+[1] 0
+print(Rmach_det(inpt_matr = mtr_test5))
+[1] 0
+
+det(mtr_test6)
+[1] 0
+print(Rmach_det(inpt_matr = mtr_test6))
+[1] 0
+
+det(mtr_test7)
+[1] 0
+print(Rmach_det(inpt_matr = mtr_test7))
+[1] 0
+
+det(mtr_test8)
+[1] 0
+print(Rmach_det(inpt_matr = mtr_test8))
+[1] 0
+
+det(mtr_test9)
+[1] 0
+print(Rmach_det(inpt_matr = mtr_test2))
+[1] 0
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
 <!DOCTYPE html><html><head><title>R: v_Rmach_fold</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />

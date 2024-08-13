@@ -7988,4 +7988,161 @@ lm_label_generation2 <- function(inpt_datf,
   return(inpt_datf)
 }
 
+#' Rmach_det
+#'
+#' Calculates the determinant of any square matrix, see examples
+#'
+#' @param inpt_matr
+#'
+#' @examples
+#'
+#' mtr_test2 <- matrix(nrow = 2, ncol = 2, data = c(4:6, 37))
+#' mtr_test3 <- matrix(nrow = 3, ncol = 3, data = c(4:6, 37, 12, 33, 1, 2, 3))
+#' mtr_test4 <- matrix(nrow = 4, ncol = 4, data = c(4:6, 37, 12, 33, 1, 2, 3, 8, 7, 8, 7, 11, 22, 21))
+#' mtr_test5 <- matrix(nrow = 5, ncol = 5, data = c(1:25))
+#' mtr_test6 <- matrix(nrow = 6, ncol = 6, data = c(1:36))
+#' mtr_test7 <- matrix(nrow = 7, ncol = 7, data = c(1:49))
+#' mtr_test8 <- matrix(nrow = 8, ncol = 8, data = c(1:64))
+#' mtr_test9 <- matrix(nrow = 9, ncol = 9, data = c(1:81))
+#' 
+#' det(mtr_test2)
+#' [1] 118
+#' print(Rmach_det(inpt_matr = mtr_test2))
+#' [1] 118
+#' 
+#' det(mtr_test3)
+#' [1] -138 
+#' print(Rmach_det(inpt_matr = mtr_test3))
+#' [1] -138
+#'
+#' det(mtr_test4)
+#' [1] -20001
+#' print(Rmach_det(inpt_matr = mtr_test4))
+#' [1] -20001
+#'
+#' det(mtr_test5)
+#' [1] 0
+#' print(Rmach_det(inpt_matr = mtr_test5))
+#' [1] 0
+#'
+#' det(mtr_test6)
+#' [1] 0
+#' print(Rmach_det(inpt_matr = mtr_test6))
+#' [1] 0
+#'
+#' det(mtr_test7)
+#' [1] 0
+#' print(Rmach_det(inpt_matr = mtr_test7))
+#' [1] 0
+#'
+#' det(mtr_test8)
+#' [1] 0
+#' print(Rmach_det(inpt_matr = mtr_test8))
+#' [1] 0
+#'
+#' det(mtr_test9)
+#' [1] 0
+#' print(Rmach_det(inpt_matr = mtr_test2))
+#' [1] 0
+#'
+#' @export
+
+Rmach_det <- function(inpt_matr){
+  if (nrow(inpt_matr) != ncol(inpt_matr)){
+    return("The matrix is not square")
+  }
+  if (nrow(inpt_matr) == 2){
+    return(inpt_matr[1, 1] * inpt_matr[2, 2] - inpt_matr[2, 1] * inpt_matr[1, 2])
+  }
+  rtn_val = 0
+  cur_mv <- rep(x = 1, times = (nrow(inpt_matr) - 2))
+  cur_pos <- seq(from = 1, to = length(cur_mv), by = 1)
+  stay_pos <- cur_pos
+  pre_all <- c(1:ncol(inpt_matr))
+  row_val <- nrow(inpt_matr)
+  alrd_pos <- c()
+  fr_mapply <- c(1:length(cur_pos))
+  while (cur_mv[1] <= ncol(inpt_matr)){
+    cur_cols <- pre_all[-cur_pos]
+    rtn_val = rtn_val + prod(
+                     mapply(
+                                    function(x, y, z){ 
+                                      return(ifelse(test = (x %% 2 > 0), yes = inpt_matr[y, z], no = -1 * inpt_matr[y, z])) 
+                                    }, 
+                                    cur_mv, fr_mapply, cur_pos
+                                    )
+                        ) * (inpt_matr[(row_val - 1), cur_cols[1]] * inpt_matr[row_val, cur_cols[2]] - inpt_matr[row_val, cur_cols[1]] * inpt_matr[(row_val - 1), cur_cols[2]])
+    if (cur_mv[length(cur_pos)] == 3){
+      cnt = 1
+      if (length(cur_pos) > 1){
+        cur_mv[length(cur_pos)] <- 1
+        cur_mv[length(cur_pos) - cnt] = cur_mv[length(cur_pos) - cnt] + 1
+        if (2 == length(cur_pos)){
+          no_stop <- FALSE
+          cur_pos[1] = cur_pos[1] + 1
+          cur_pos[(length(cur_pos) - cnt + 1)] <- 1
+        }else if ((cur_mv[length(cur_pos) - cnt]) != (4 + cnt)){
+          no_stop <- FALSE
+        }else{
+          no_stop <- TRUE
+        }
+        while (no_stop){
+          cur_mv[(length(cur_mv) - cnt)] = 1
+          cnt = cnt + 1
+          if (cnt == length(cur_pos)){
+            no_stop <- FALSE
+            cnt = cnt - 1
+          }else if ((cur_mv[length(cur_pos) - cnt]) != (4 + cnt)){
+            cur_mv[(length(cur_mv) - cnt)] = cur_mv[(length(cur_mv) - cnt)] + 1 
+            no_stop <- FALSE
+          }else{
+            cur_mv[(length(cur_mv) - cnt)] = cur_mv[(length(cur_mv) - cnt)] + 1 
+          }
+        }
+        if (2 != length(cur_pos)){
+          cur_pre_all <- pre_all[cur_pos[(length(cur_pos) - cnt)]:length(pre_all)]
+          cur_mapply <- mapply(function(x){return(
+                                      ifelse(
+                                        test = is.na(match(x = x, 
+                                                    table = cur_pre_all
+                                        )),
+                                        yes = 0,
+                                        no = match(x = x, 
+                                                 table = cur_pre_all
+                                        )
+                                      )
+                                    )}, 
+                               cur_pos[(length(cur_pos) - cnt):1])
+          cur_mapply <- cur_mapply[cur_mapply != 0]
+          cur_pre_all <- cur_pre_all[-cur_mapply]
+          if (identical(integer(0), cur_pre_all)){
+            return(rtn_val)
+          }
+          cur_pos[(length(cur_pos) - cnt)] <- min(cur_pre_all)
+          cur_pos[(length(cur_pos) - cnt + 1)] <- min(pre_all[-(cur_pos[1:(length(cur_pos) - cnt + 1)])])
+        }
+        if (cnt > 1){
+          cur_pos_id <- cur_pos[1:(length(cur_pos) - cnt + 1)]
+          for (i in 3:(1 + cnt)){
+            min_id <- min(pre_all[-cur_pos_id])
+            cur_pos_id <- c(cur_pos_id, min_id)
+            cur_pos[(length(cur_pos) - cnt + i - 1)] <- min_id
+          }
+        }
+      }else{
+        cur_mv[1] <- cur_mv[1] + 1
+      }
+      alrd_pos <- c()
+    }else{
+      cur_mv[length(cur_pos)] = cur_mv[length(cur_pos)] + 1
+      if (!((cur_pos[length(cur_pos)] + 1) %in% cur_pos)){
+        cur_pos[length(cur_pos)] = cur_pos[length(cur_pos)] + 1
+      }else{
+        cur_pos[length(cur_pos)] <- min(pre_all[-unique(c(cur_pos, alrd_pos))])
+      }
+    }
+    alrd_pos <- c(alrd_pos, cur_pos[length(cur_pos)])
+  }
+  return(rtn_val)
+}
 
