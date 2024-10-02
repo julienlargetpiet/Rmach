@@ -1905,6 +1905,60 @@ Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 ```
 
 
+# `multiple_groups`
+
+multiple_groups
+
+
+## Description
+
+Output all the possible combinations between elements within a vector for a group size, see examples
+
+
+## Usage
+
+```r
+multiple_groups(inpt_v = c(), group_size = 2)
+```
+
+
+## Arguments
+
+Argument      |Description
+------------- |----------------
+`inpt_v`     |     is the input vector
+`group_size`     |     is the group size
+
+
+## Examples
+
+```r
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 2))
+
+[1] "Marc-Sylvie"      "Marc-Julien"      "Marc-Christine"   "Marc-Axel"
+[5] "Sylvie-Julien"    "Sylvie-Christine" "Sylvie-Axel"      "Julien-Christine"
+[9] "Julien-Axel"      "Christine-Axel"
+
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 3))
+
+[1] "Marc-Sylvie-Julien"      "Marc-Sylvie-Christine"
+[3] "Marc-Sylvie-Axel"        "Marc-Julien-Christine"
+[5] "Marc-Julien-Axel"        "Marc-Christine-Axel"
+[7] "Sylvie-Julien-Christine" "Sylvie-Julien-Axel"
+[9] "Sylvie-Christine-Axel"   "Julien-Christine-Axel"
+
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 4))
+
+[1] "Marc-Sylvie-Julien-Christine" "Marc-Sylvie-Julien-Axel"
+[3] "Marc-Sylvie-Christine-Axel"   "Marc-Julien-Christine-Axel"
+[5] "Sylvie-Julien-Christine-Axel"
+
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 5))
+
+[1] "Marc-Sylvie-Julien-Christine-Axel"
+```
+
+
 # `poly_model`
 
 Rmach

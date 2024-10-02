@@ -2305,6 +2305,85 @@ print(lm_label_generation(
 
 </div>
 </body></html>
+<!DOCTYPE html><html><head><title>R: multiple_groups</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css">
+<script type="text/javascript">
+const macros = { "\\R": "\\textsf{R}", "\\code": "\\texttt"};
+function processMathHTML() {
+    var l = document.getElementsByClassName('reqn');
+    for (let e of l) { katex.render(e.textContent, e, { throwOnError: false, macros }); }
+    return;
+}</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+    onload="processMathHTML();"></script>
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container"><main>
+
+<table style="width: 100%;"><tr><td>multiple_groups</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>multiple_groups</h2>
+
+<h3>Description</h3>
+
+<p>Output all the possible combinations between elements within a vector for a group size, see examples
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class='language-R'>multiple_groups(inpt_v = c(), group_size = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr><td><code id="inpt_v">inpt_v</code></td>
+<td>
+<p>is the input vector</p>
+</td></tr>
+<tr><td><code id="group_size">group_size</code></td>
+<td>
+<p>is the group size</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre><code class='language-R'>
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 2))
+
+ [1] "Marc-Sylvie"      "Marc-Julien"      "Marc-Christine"   "Marc-Axel"       
+ [5] "Sylvie-Julien"    "Sylvie-Christine" "Sylvie-Axel"      "Julien-Christine"
+ [9] "Julien-Axel"      "Christine-Axel"  
+
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 3))
+
+ [1] "Marc-Sylvie-Julien"      "Marc-Sylvie-Christine"  
+ [3] "Marc-Sylvie-Axel"        "Marc-Julien-Christine"  
+ [5] "Marc-Julien-Axel"        "Marc-Christine-Axel"    
+ [7] "Sylvie-Julien-Christine" "Sylvie-Julien-Axel"     
+ [9] "Sylvie-Christine-Axel"   "Julien-Christine-Axel"  
+
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 4))
+
+[1] "Marc-Sylvie-Julien-Christine" "Marc-Sylvie-Julien-Axel"     
+[3] "Marc-Sylvie-Christine-Axel"   "Marc-Julien-Christine-Axel"  
+[5] "Sylvie-Julien-Christine-Axel"
+
+print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 5))
+
+[1] "Marc-Sylvie-Julien-Christine-Axel"
+
+</code></pre>
+
+</main>
+
+</div>
+</body></html>
 <!DOCTYPE html><html><head><title>R: Rmach poly_model</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />

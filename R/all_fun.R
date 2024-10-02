@@ -8146,5 +8146,73 @@ Rmach_det <- function(inpt_matr){
   return(rtn_val)
 }
 
+#' multiple_groups
+#'
+#' Output all the possible combinations between elements within a vector for a group size, see examples
+#'
+#' @param inpt_v is the input vector
+#' @param group_size is the group size
+#'
+#' @examples
+#'
+#' print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 2))
+#' 
+#'  [1] "Marc-Sylvie"      "Marc-Julien"      "Marc-Christine"   "Marc-Axel"       
+#'  [5] "Sylvie-Julien"    "Sylvie-Christine" "Sylvie-Axel"      "Julien-Christine"
+#'  [9] "Julien-Axel"      "Christine-Axel"  
+#'
+#' print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 3))
+#' 
+#'  [1] "Marc-Sylvie-Julien"      "Marc-Sylvie-Christine"  
+#'  [3] "Marc-Sylvie-Axel"        "Marc-Julien-Christine"  
+#'  [5] "Marc-Julien-Axel"        "Marc-Christine-Axel"    
+#'  [7] "Sylvie-Julien-Christine" "Sylvie-Julien-Axel"     
+#'  [9] "Sylvie-Christine-Axel"   "Julien-Christine-Axel"  
+#'
+#' print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 4))
+#'
+#' [1] "Marc-Sylvie-Julien-Christine" "Marc-Sylvie-Julien-Axel"     
+#' [3] "Marc-Sylvie-Christine-Axel"   "Marc-Julien-Christine-Axel"  
+#' [5] "Sylvie-Julien-Christine-Axel"
+#'
+#' print(multiple_groups(inpt_v = c("Marc", "Sylvie", "Julien", "Christine", "Axel"), group_size = 5))
+#' 
+#' [1] "Marc-Sylvie-Julien-Christine-Axel"
+#'
+#' @export
+
+multiple_groups <- function(inpt_v = c(), group_size = 2){
+  inpt_v2 <- inpt_v
+  Pre_len <- length(inpt_v)
+  if (group_size > 1 & group_size <= length(inpt_v)){
+    Cnt = 1
+    while (Cnt < group_size){
+      rtn_v <- c()
+      for (i in inpt_v2){
+        cnt = 1
+        inpt_v <- inpt_v[length(inpt_v):1]
+        for (k in 1:length(inpt_v)){
+          if (!(identical(integer(0), grep(pattern = i, x = inpt_v[k])))){
+            break
+          }
+        }
+        k <- length(inpt_v) - k + 1
+        inpt_v <- inpt_v[length(inpt_v):1]
+        while ((k + cnt) <= length(inpt_v)){
+          rtn_v <- c(rtn_v, paste(i, inpt_v[cnt + k], sep = "-"))
+          cnt = cnt + 1
+        }
+      }
+      inpt_v <- c()
+      for (i in  rtn_v){ inpt_v <- c(inpt_v, i) }
+      Cnt = Cnt + 1
+    }
+    return(inpt_v)
+  }else if (group_size > 1){
+    return("Group size larger than number of elements")
+  }else{
+    return(inpt_v)
+  }
+}
 
 
