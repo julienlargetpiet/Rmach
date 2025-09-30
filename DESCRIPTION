@@ -1,0 +1,12 @@
+Package: Rmach
+Title: Provides machine learning algorythm
+Version: 2.0.0.0
+Authors@R: 
+    person("Julien", "Larget-Piet", , "julien.larget-piet@dreamRs.fr", role = c("aut", "cre"))
+Description: Provides these algorythms: coefficient finder for regression functions
+License: GPL (==3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports:
+    stringr
